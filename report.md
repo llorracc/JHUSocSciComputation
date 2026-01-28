@@ -1,8 +1,21 @@
+---
+abstract: |
+  This guide introduces the Rockfish high-performance computing cluster at Johns Hopkins University,
+  managed by Advanced Research Computing at Hopkins (ARCH). We cover the cluster's hardware resources,
+  condominium model, allocation system, and storage infrastructure, then walk through connecting to
+  the cluster, managing software modules, and submitting jobs with the Slurm workload manager. The
+  guide includes practical script examples for batch jobs, job arrays, MPI, and mixed MPI/OpenMP
+  programs, along with instructions for using Singularity containers, Python virtual environments,
+  and R on the cluster. It is intended for researchers in economics and the social sciences who are
+  new to high-performance computing, as well as experienced users seeking a reference for
+  Rockfish-specific workflows.
+---
+
 Computation in economics and the social sciences enables researchers to tackle questions and analyze datasets that were previously intractable. The availability of large-scale datasets, the development of powerful computational tools, and the increasing adoption of computational methods across these disciplines have driven growing demand for high-performance computing resources.
 
 To meet this rising demand for computational power, institutions like [Johns Hopkins University](https://www.jhu.edu) have invested heavily in high-performance computing (HPC) resources, such as the Rockfish cluster managed by the [Advanced Research Computing at Hopkins (ARCH)](https://www.arch.jhu.edu/). HPC facilities like Rockfish provide researchers with access to a vast pool of computational resources, including high-performance compute nodes, GPU nodes for accelerated computing, and large-scale storage systems. These resources support computationally intensive research in economics and other social sciences, including large-scale simulations, data analysis, and numerical modeling.
 
-This report provides an overview of the resources available to researchers on the Rockfish cluster. It is intended to provide a guide for researchers who are new to the cluster, as well as a reference for those who are familiar with the cluster.
+ARCH provides software infrastructure including compilers (GNU, Intel, PGI), MPI libraries (OpenMPI, IntelMPI, Mvapich2), and containerization tools (Singularity), along with scientific support services, training, and workshops {cite:p}`arch_sysconfig`. This report provides an overview of the resources available to researchers on the Rockfish cluster. It is intended as a guide for researchers who are new to the cluster and as a reference for those already familiar with it.
 
 # Rockfish and High-Performance Computing (HPC)
 
@@ -35,7 +48,7 @@ A distinctive feature of Rockfish is its "condominium" model {cite:p}`arch_condo
 For more information about the condo model or colocation services, contact ARCH at `help@rockfish.jhu.edu`.
 
 (compute-nodes)=
-## Compute Nodes
+## Compute Resources
 
 Compute nodes are the individual computers that make up a high-performance computing (HPC) cluster like Rockfish {cite:p}`arch_hardware`. Each node contains resources like CPUs, memory, and potentially GPUs, that are used to execute user jobs. Rockfish has different types of compute nodes, including:
 
@@ -44,7 +57,7 @@ Compute nodes are the individual computers that make up a high-performance compu
 - **GPU Nodes:** Rockfish offers GPU nodes equipped with NVIDIA A100 GPUs for accelerated computing {cite:p}`arch_gpu_jobs`. These nodes are available through two partitions: the `a100` partition, which provides A100 GPUs with 40GB of memory each (12 cores per GPU, 48 cores per node), and the `ica100` partition, which provides A100 GPUs with 80GB of memory each (16 cores per GPU, 64 cores per node) {cite:p}`arch_partitions`. Each GPU is mapped to a specific number of cores, and requesting more cores than the mapped amount will automatically assign additional GPUs to the job, potentially leading to wasted resources.
 
 (memory)=
-## Memory
+### Memory
 
 The memory available for a job on Rockfish is determined by the number of tasks requested per node {cite:p}`arch_faq`. Each core is associated with approximately 4GB of memory. By default, each core has 4GB of memory allocated to it. If a job requires more memory, users can request additional cores; each additional core adds 4GB to the job's total available memory.
 
@@ -58,10 +71,6 @@ Rockfish offers various storage options for researchers {cite:p}`arch_storage`:
 - **Home Directory:** Each user gets a 50GB home directory that is backed up weekly to an off-site location.
 - **Group Allocation on Parallel File System:** All research groups receive a default allocation of 10TB on the parallel file system (GPFS). Justifications for additional scratch space can be submitted with proposals.
 
-## Benefits of Using Rockfish
-
-Rockfish offers several practical advantages for research in economics and the social sciences. The cluster provides compute nodes with high CPU core counts, large memory capacity, and high-speed interconnects, which are needed for computationally intensive tasks common in these fields. Large memory nodes and GPU nodes accommodate different workload types, from large-scale data analysis to accelerated numerical computation. The condominium model allows research groups to contribute their own computational resources to Rockfish, granting them priority usage while expanding the overall capacity of the system. ARCH provides software infrastructure including compilers (GNU, Intel, PGI), MPI libraries (OpenMPI, IntelMPI, Mvapich2), and containerization tools (Singularity), along with scientific support services, training, and workshops {cite:p}`arch_sysconfig`.
-
 # Accessing and Managing Resources on Rockfish
 
 ## Requesting Allocations and Accounts
@@ -74,8 +83,6 @@ Rockfish offers several types of allocations tailored to different research need
 - **Large Memory (LM) Allocations:** These allocations are specifically designed for jobs that require significant amounts of memory (more than 192GB). Like CPU allocations, the default allocation for large memory nodes ("bigmem") is 50,000 core-hours per quarter, but can be increased with proper justification.
 - **GPU Allocations:** For research involving accelerated computing with GPUs, Rockfish offers GPU allocations. The standard allocation for GPU resources is 20,000 core-hours per quarter. Again, this allocation can be expanded upon submission of a justification outlining the specific computational needs of the research.
 - **Startup Allocations:** These are one-time allocations intended to help new research groups familiarize themselves with the Rockfish environment. They provide a trial period to benchmark codes and explore the various features and resources available on the cluster. This initial experience allows researchers to gather the necessary information to submit informed proposals for regular allocations that accurately reflect their computational needs.
-
-### Allocation Limits and Justification Requirements
 
 All allocations on Rockfish are subject to limits based on the type of resource and are granted according to available capacity. While default allocations are provided, researchers can request increased resources by providing a justification for their needs in their proposal. This justification should demonstrate how the requested resources are essential for the proposed research project. Factors that can influence the allocation approval process include:
 
@@ -118,26 +125,24 @@ Rockfish supports various methods for transferring data between the cluster and 
 
 The Rockfish cluster employs a module system, specifically Lua modules version 8.3 developed at TACC {cite:p}`tacc_lmod`, to manage software packages and user environments. Modules provide a way to dynamically modify the shell environment, ensuring that the necessary software and libraries are accessible for specific applications.
 
-### Loading and Unloading Modules
+**Loading and unloading modules:**
 
-- `module load` (or `ml`): This command loads a specific module, making the corresponding software or package available in the user's environment. For example, to use the Intel compilers and Intel MPI libraries, a user would execute the command `module load intel intel-mpi intel-mkl`.
-- `module unload` (or `ml -`): This command unloads a previously loaded module, removing it from the user's environment. To unload the Intel MPI module, for instance, a user would use the command `module unload intel-mpi`.
+- `module load` (or `ml`): Loads a specific module, making the corresponding software available. For example, `module load intel intel-mpi intel-mkl` loads the Intel compilers and MPI libraries.
+- `module unload` (or `ml -`): Unloads a previously loaded module. For example, `module unload intel-mpi`.
 
-Rockfish's Lua module system is designed to handle module dependencies and conflicts automatically. If a user loads a module that conflicts with a previously loaded module, the system will automatically replace the conflicting module with the newly requested one. For example, loading the GNU compiler module (gcc) after loading the Intel compiler module (intel) will trigger a message indicating that Lmod is automatically replacing the Intel module with the GNU module.
+Rockfish's Lua module system handles dependencies and conflicts automatically. If a user loads a module that conflicts with a previously loaded one, the system will automatically replace the conflicting module.
 
-### Module Information
+**Searching and inspecting modules:**
 
-- `module avail` (or `ml av`): This command lists all available modules on the Rockfish cluster. This list encompasses a wide range of software packages, libraries, and tools, categorized by their respective functions and dependencies. Users can browse the list to identify modules relevant to their research needs.
-- `module spider` (or `ml spider`): This command allows users to search for specific modules and obtain information about available versions and dependencies. For example, to search for the Python module, a user would use `module spider python`.
-- `module show` (or `ml show`): This command displays detailed information about a specific module, including the environment variables it sets, compilation options, and any dependencies or conflicts. For example, to view the environment variables set by the Python module, a user would use `module show python/3.9.0`.
+- `module avail` (or `ml av`): Lists all available modules on the cluster.
+- `module spider` (or `ml spider`): Searches for specific modules and shows available versions and dependencies. For example, `module spider python`.
+- `module show` (or `ml show`): Displays detailed information about a module, including environment variables, compilation options, and dependencies. For example, `module show python/3.9.0`.
 
-### Creating and Managing Module Collections
+**Managing module collections:**
 
-- `module save`: This command saves the currently loaded modules into a named collection, allowing users to easily restore their desired software environment in future sessions. For example, a user can create a module collection named data_science by loading the necessary modules, such as Python and R, and then executing the command `module save data_science`.
-- `module restore`: This command restores a previously saved module collection, loading all the modules associated with that collection. To restore the data_science collection, the user would use the command `module restore data_science`.
-- `module disable`: This command disables or deletes a previously saved module collection. To remove the data_science collection, a user would execute the command `module disable data_science`.
-
-These module management features are crucial for streamlining workflows, ensuring reproducibility, and facilitating collaboration on Rockfish. Users can tailor their software environments to specific tasks, share collections with collaborators, and easily switch between different software configurations as needed.
+- `module save`: Saves the currently loaded modules into a named collection for future sessions. For example, `module save data_science`.
+- `module restore`: Restores a previously saved collection. For example, `module restore data_science`.
+- `module disable`: Deletes a saved collection. For example, `module disable data_science`.
 
 ## Checking Allocation Status
 
@@ -176,21 +181,13 @@ By using this command, users can obtain a comprehensive view of their allocation
 
 ## Slurm Overview
 
-Rockfish uses Slurm to manage resource scheduling and job submissions {cite:p}`arch_rockfish_docs`. Slurm is a widely used open-source workload manager in the HPC field, developed by SchedMD.
-
-### Workload Manager Functions
-
-A workload manager like Slurm provides several essential functions for managing computational resources, which are especially important in a shared environment like Rockfish. The key functions are:
+Rockfish uses Slurm to manage resource scheduling and job submissions {cite:p}`arch_rockfish_docs`. Slurm is a widely used open-source workload manager in the HPC field, developed by SchedMD. It provides three essential functions:
 
 - Resource access: Slurm grants users access to various resources, including compute nodes, memory, and specialized hardware like GPUs. By managing resource allocation, Slurm ensures fair and efficient usage for all users.
 - Job management: Slurm handles the execution of user jobs, monitoring their progress and managing their resource consumption. This involves launching, tracking, and terminating jobs based on user-defined parameters.
 - Queue management: Slurm maintains queues of submitted jobs, scheduling them for execution based on resource availability, job priority, and user-defined constraints. This prevents system overload and optimizes resource utilization.
 
-### Key Concepts
-
-- [Interactive sessions](#interactive-sessions) allow direct interaction with compute nodes for code development, debugging, and data exploration.
-- [Batch jobs](#slurm-batch-scripts) run non-interactively, executing a predefined set of commands in a Slurm script submitted to the queue.
-- [Job arrays](#job-arrays) enable submission of many similar jobs that differ only in input parameters, simplifying parameter sweeps and ensemble simulations.
+Slurm supports three main job types: [interactive sessions](#interactive-sessions) for direct interaction with compute nodes, [batch jobs](#slurm-batch-scripts) for non-interactive script execution, and [job arrays](#job-arrays) for submitting many similar jobs with varying parameters.
 
 (interactive-sessions)=
 ## Interactive Sessions
@@ -218,13 +215,9 @@ interact -p a100 -c 12 -t 12:00:00 -g 1
 Once the interactive session is no longer needed, users can gracefully exit using the exit command. This releases the allocated resources, making them available for other users or jobs.
 
 (slurm-batch-scripts)=
-## Slurm Batch Scripts on Rockfish
+## Batch Scripts
 
-Slurm batch scripts are essential for running non-interactive jobs on Rockfish, enabling researchers to execute computationally demanding tasks without continuous user interaction. These scripts, written in Bash, serve as blueprints for job execution, defining the necessary resources, dependencies, and execution steps for a given task.
-
-### Structure of a Slurm Script
-
-A Slurm batch script is typically structured into three main components:
+Slurm batch scripts are essential for running non-interactive jobs on Rockfish, enabling researchers to execute computationally demanding tasks without continuous user interaction. These scripts, written in Bash, serve as blueprints for job execution, defining the necessary resources, dependencies, and execution steps for a given task. A batch script is typically structured into three main components:
 
 - **Resource Requests:** This section, delineated by `#SBATCH` directives, outlines the computational resources needed for the job. These directives convey instructions to the Slurm scheduler, detailing parameters like the job name, wall time, number of nodes, cores per task, memory allocation, and specific hardware requirements such as GPUs.
 
@@ -236,9 +229,7 @@ ml intel/2022.2
 
 - **Job Steps:** This section encompasses the actual commands to be executed during the job. It can include compiling code, running executables, processing data, and performing any other task defined by the researcher.
 
-### Example Slurm Script (`my_job.slurm`)
-
-Here’s a simple example demonstrating these components within a Slurm script:
+Here is an example demonstrating these components:
 
 ```bash
 #!/bin/bash
@@ -282,37 +273,20 @@ Slurm will then queue the job and allocate the requested resources when they bec
 (submitting-monitoring)=
 ## Submitting and Monitoring Jobs
 
-### Checking Job Status
-
 After submitting a job with `sbatch` (see [](#slurm-batch-scripts)), Slurm assigns a unique job ID. You can monitor jobs using the commands described in [](#slurm-commands). To check a specific job:
 
 ```bash
 squeue -j 12345
 ```
 
-### Viewing Job Outputs
+Slurm redirects the standard output and error streams to files specified in the script. By default, output is written to `slurm-[jobid].out` if no output file is specified. You can view these files using text editors or command-line tools like `cat` or `less`.
 
-Slurm typically redirects the standard output and error streams of your job to files specified in the script. By default, the output is written to a file named `slurm-[jobid].out` if no specific output file is specified.
+Jobs can be in various states: **Pending** (awaiting resource allocation), **Running** (executing on allocated nodes), **Complete** (finished successfully), **Timeout** (exceeded the wall time limit), **Failed** (terminated with a non-zero exit code; check `slurm-[jobid].err` for details), or **Node Fail** (terminated due to a hardware or system-level problem on an allocated node).
 
-You can view the content of these '.out' files using standard text editors or command-line tools like `cat` or `less` to examine the output generated by your job.
-
-### Understanding Basic Job States
-
-Jobs submitted to Rockfish can be in various states, reflecting their progress and status in the queue. Here's a description of common job states:
-
-- **Pending:** The job is in the queue, awaiting resource allocation. This state might be due to insufficient available resources or other jobs having higher priority.
-- **Running:** The job has been granted the requested resources and is currently executing on the allocated compute nodes.
-- **Complete:** The job has finished successfully, completing all defined tasks.
-- **Timeout:** The job was terminated by Slurm because it exceeded the specified wall time limit defined in the `#SBATCH --time` directive.
-- **Failed:**  The job terminated with a non-zero exit code, indicating an error during execution. Examining the error log file, usually named `slurm-[jobid].err`, can provide insights into the cause of the failure.
-- **Node Fail:** The job was terminated due to a problem reported by one of the compute nodes allocated to the job. This could indicate hardware issues or other system-level problems.
-
-## Advanced Slurm Features
-
-This section explores advanced Slurm features, focusing on job arrays, essential environment variables, and key points for effective Slurm usage on the Rockfish cluster.
+## Job Arrays and Environment Variables
 
 (job-arrays)=
-### Job Arrays for Efficient Job Submission
+### Job Arrays
 
 Job arrays provide a powerful mechanism for submitting and managing a large number of similar jobs efficiently.  Instead of creating and submitting individual scripts for each job, you can define a single script with an array specification, instructing Slurm to create multiple job instances based on the provided parameters.
 
@@ -343,7 +317,7 @@ Slurm provides special environment variables within job arrays, allowing you to 
 - **`SLURM_ARRAY_JOB_ID`:** This variable stores the ID of the parent job submission, which is the ID reported by `sbatch` when you submitted the array. It remains the same for all tasks within the array.
 - **`SLURM_ARRAY_TASK_ID`:** This variable stores the index of the current task within the array. It varies for each task and can be used to customize the job's behavior based on its position in the array.
 
-### Understanding Slurm Environment Variables
+### Environment Variables
 
 Slurm provides several environment variables that can be accessed within your scripts to get information about the job and the computing environment. Some of the key environment variables include:
 
@@ -406,7 +380,7 @@ Slurm flags, specified in the resource request section of your batch script usin
 
 The following Slurm script examples illustrate common job submission patterns on Rockfish.
 
-### Basic Slurm Script
+**Basic Slurm Script**
 
 ```bash
 #!/bin/bash -l 
@@ -433,7 +407,7 @@ date  # Display the current date and time
 
 This script requests 1 node with 8 tasks on the `shared` partition for 1 hour (see [](#slurm-flags) for flag details). The `%j` placeholder in the output filenames is replaced by the Slurm job ID. After loading the Intel compiler module, the script prints a message, the compute node's hostname, and the current date.
 
-### Running a Matlab Job Array with Multiple Tasks
+**Matlab Job Array with Multiple Tasks**
 
 ```bash
 #!/bin/bash -l
@@ -457,7 +431,7 @@ matlab -nodisplay -singleCompThread -r "myMatlabFunction($SLURM_ARRAY_TASK_ID), 
 - **Multiple Tasks Per Array Element:** The `--ntasks=4` flag specifies that each array element will launch 4 tasks (processes), each using 1 core by default.
 - **Matlab Execution:**  The `matlab` command runs a Matlab script (`myMatlabFunction`) with the task ID as input, pauses for 20 seconds, and then exits.
 
-### Job Array with a Concurrency Limit
+**Job Array with a Concurrency Limit**
 
 ```bash
 #!/bin/bash -l 
@@ -482,7 +456,7 @@ echo "Running task $SLURM_ARRAY_TASK_ID on $HOSTNAME"
 - **Concurrency Limit:**  The `--array=1-100%10` flag creates a job array with 100 tasks (IDs 1 through 100), but limits the number of concurrently running tasks to 10 at any given time. All 100 tasks will eventually execute. (To specify a step size instead, use colon syntax, e.g., `--array=1-100:10` for tasks 1, 11, 21, ..., 91.)
 - **Task Execution:**  The script prints a message indicating the task ID and hostname for each executed task.
 
-### Running an MPI Program
+**Running an MPI Program**
 
 ```bash
 #!/bin/bash -l
@@ -510,7 +484,7 @@ echo "Completed MPI job $SLURM_JOBID"
 
 - **MPI Execution:** This script uses `mpiexec` to launch the compiled MPI program (`my_mpi_program.x`). Make sure the number of tasks requested matches the number of processes your MPI program is designed to use.
 
-### Running a Mixed MPI/OpenMP Program
+**Running a Mixed MPI/OpenMP Program**
 
 ```bash
 #!/bin/bash -l 
@@ -546,9 +520,9 @@ echo "Completed mixed MPI/OpenMP job $SLURM_JOBID"
 
 Remember that these are example scripts, and you'll need to tailor them to your specific needs, adjusting resource requests, module loading, compilation commands, and the number of processes used in `mpiexec` according to your application.
 
-# Advanced Computing Techniques on Rockfish
+# Software Environment
 
-## Using Singularity Containers on Rockfish
+## Singularity Containers
 
 **Singularity** (now known as **Apptainer** following its 2021 move to the Linux Foundation) is available on the compute nodes of the Rockfish cluster without loading a module. (The version available may change over time; consult the [ARCH documentation](https://docs.arch.jhu.edu/) for the current version.) To use Singularity, request an interactive session on a compute node using the `interact` command, specifying the desired partition, number of cores, and time limit:
 
@@ -558,71 +532,38 @@ interact -p parallel -n 1 -c 1 -t 120
 
 This command requests an interactive session on the `parallel` partition with 1 task, 1 core, and a time limit of 120 minutes. Once you have an interactive session, you can use basic Singularity commands.
 
-### Singularity Commands
+The key Singularity commands are:
 
-- `singularity --help`: This command displays help information for Singularity, providing a list of available commands and options.
-- `singularity pull`: You can use this command to pull a Singularity image from a container registry, such as Docker Hub. Singularity is compatible with Docker images. For example:
+- `singularity pull`: Pulls a container image from a registry such as Docker Hub. Singularity is compatible with Docker images. For example:
 
 ```bash
 singularity pull python-3.9.6.sif docker://python:3.9.6-slim-buster
 ```
 
-This command pulls the `python:3.9.6-slim-buster` image from Docker Hub and saves it as a Singularity image file named `python-3.9.6.sif`.
+- `singularity run`: Runs a Singularity image. For example, `singularity run python-3.9.6.sif`.
+- `singularity shell`: Starts an interactive shell session inside a container. For example, `singularity shell python-3.9.6.sif`.
+- `singularity --help`: Displays help information and available commands.
 
-- `singularity run`: This command runs a Singularity image. For example:
+Singularity also provides support for GPUs and MPI applications, allowing containerized workloads to utilize these technologies. For more detailed information, consult the ARCH Technical Documentation {cite:p}`arch_rockfish_docs` and the Rockfish Cluster Software Guide {cite:p}`rockfish_software_guide`.
 
-```bash
-singularity run python-3.9.6.sif 
-```
-
-This command runs the Python 3.9.6 Singularity image.
-
-- `singularity shell`: This command starts an interactive shell session inside a Singularity container. For example:
-
-```bash
-singularity shell python-3.9.6.sif
-```
-
-This command will start an interactive shell session inside the Python 3.9.6 container.
-
-### Singularity Features
-
-Singularity provides support for **GPUs and MPI** applications, allowing you to run containerized workloads that utilize these technologies.
-
-For more detailed information on Singularity, consult the ARCH Technical Documentation {cite:p}`arch_rockfish_docs` and the Rockfish Cluster Software Guide {cite:p}`rockfish_software_guide`.
-
-## Creating and Using Python Virtual Environments on Rockfish
+## Python Virtual Environments
 
 Python virtual environments can be created on Rockfish using either `venv` or `conda`, and then used within Slurm scripts.
 
-### Creating Virtual Environments
+**Creating virtual environments:**
 
-- **Using `venv`:** To create a Python virtual environment using the built-in `venv` module in Python 3:
-  1. Load a Python module: `module load python/3.8.6` (you can change the Python version as needed).
-  1. Create the virtual environment in your desired directory: `python3 -m venv myenv`. This creates a virtual environment named "myenv."
-- **Using `conda`:** To create a Conda virtual environment:
-  1. Load the Anaconda module: `module load anaconda`.
-  1. Create the environment (you can specify the Python version): `conda create --name myenv python=3.9`. This creates an environment named "myenv" using Python 3.9.
+- **Using `venv`:** Load a Python module (`module load python/3.8.6`), then create the environment: `python3 -m venv myenv`.
+- **Using `conda`:** Load the Anaconda module (`module load anaconda`), then create the environment: `conda create --name myenv python=3.9`.
 
-### Activating and Deactivating Environments
+**Activating, deactivating, and installing packages:**
 
-- **`venv`:**
-  - Activate: `source myenv/bin/activate`
-  - Deactivate: `deactivate`
-- **`conda`:**
-  - Activate: `conda activate myenv`
-  - Deactivate: `conda deactivate`
+- **`venv`:** Activate with `source myenv/bin/activate`, deactivate with `deactivate`.
+- **`conda`:** Activate with `conda activate myenv`, deactivate with `conda deactivate`.
+- Once activated, install packages with `pip install numpy` or `conda install numpy`.
 
-### Installing Packages
+**Using virtual environments in Slurm scripts:**
 
-Once your virtual environment is activated, you can install packages using `pip` (for both `venv` and `conda`) or `conda` (for conda environments):
-
-- `pip install numpy`
-- `conda install numpy`
-
-### Using Virtual Environments in Slurm Scripts
-
-To use a virtual environment within a Slurm script, you need to activate it before running your Python script. Here's an example Slurm script demonstrating how to use a `venv` environment:
+To use a virtual environment within a Slurm script, activate it before running your Python script:
 
 ```bash
 #!/bin/bash 
@@ -655,7 +596,7 @@ deactivate
 
 By using virtual environments in your Slurm scripts, you can ensure that your Python jobs run with the correct dependencies and avoid conflicts with other software on the Rockfish cluster.
 
-## Loading and Managing R Submodules on Rockfish
+## R Submodules
 
 R submodules can be loaded within R sessions on the Rockfish cluster using the `module` command to load specific software packages. The first step is loading the desired version of R into the shell session.
 
@@ -715,67 +656,29 @@ The following examples demonstrate using `lmod.R` to load and manage R submodule
 
 **Note:** Using `lmod.R` within RStudio has not been specifically documented, but the same principles of loading and managing modules should apply. The path to the `lmod.R` script may differ within the RStudio environment.
 
-## Support, Resources, and Best Practices for Rockfish
+# Best Practices and Support
 
-ARCH provides a range of support resources and best practices for utilizing the Rockfish cluster.
-
-### Contacting Support
-
-- **Email:** The primary method for contacting Rockfish support is via email at **help@rockfish.jhu.edu**.
-- **Website:** The Rockfish website {cite:p}`arch_main` serves as a central hub for information, documentation, and access to other resources.
-
-### Frequently Asked Questions (FAQ)
-
-- **FAQ Page:** The ARCH FAQ page ([https://www.arch.jhu.edu/support/faq/](https://www.arch.jhu.edu/support/faq/)) addresses common questions related to Rockfish, including account management, data transfer, and job submission.
-
-### Best Practices for Job Submission and Resource Utilization
+## Job Submission Best Practices
 
 The following best practices help optimize job submission and resource utilization on Rockfish:
 
-#### Understanding Job Parameters
+- **Estimate job parameters accurately.** Memory, time limit, and core count should reflect actual needs to avoid resource waste and job failures.
+- **Know your application's parallelism.** Determine whether it runs in serial mode, uses threads (OpenMP, within a single node), or MPI (across multiple nodes). Optimize thread counts for applications like Matlab or Gaussian.
+- **Benchmark before production runs.** Run short benchmarks (1--2 hours) with a few processes to understand resource requirements. Use the `interact` command for benchmarking and testing.
+- **Manage memory through core requests.** Memory per job is determined by the number of cores requested (see [](#memory)). For a serial job needing more than 4 GB, requesting additional cores increases the available memory proportionally.
+- **Monitor running jobs.** Connect to compute nodes with `srun --jobid=12345 -w c001 --pty /bin/bash` and use `top` or `gpustat` to check performance. For GPU codes, use `ml nvitop; nvitop`. After completion, use `seff JobID` to analyze resource efficiency.
+- **Avoid wasting GPU resources.** Do not request more cores than needed for the GPUs. See [](#compute-nodes) for the core-to-GPU mapping on each partition.
 
-- Accurately estimating job parameters like memory, time limit, and the number of cores is crucial to avoid resource waste and prevent job failures.
+## Contacting Support
 
-#### Application Type and Parallelism
+The primary method for contacting Rockfish support is via email at **help@rockfish.jhu.edu**. The Rockfish website {cite:p}`arch_main` and the [FAQ page](https://www.arch.jhu.edu/support/faq/) address common questions about account management, data transfer, and job submission.
 
-- Determine if your application runs in **serial mode (one process) or uses multiple processes** via threads or MPI libraries.
-  - OpenMP (threaded) applications run only within a node, while MPI-based codes can utilize multiple nodes.
-- **Optimize thread usage** for threaded applications like Matlab or Gaussian. Running with too many threads can be inefficient.
+When contacting support, include the following information for a quick resolution:
 
-#### Benchmarking and Resource Estimation
-
-- Run **short benchmarks (1-2 hours) with a few processes/cores** to understand your application's resource requirements.
-- Use the `interact` command to request interactive sessions for benchmarking and testing.
-
-#### Memory Management
-
-- Memory per job is determined by the number of cores requested (see [](#memory)). For a serial job needing more than 4 GB, requesting additional cores increases the available memory proportionally.
-
-#### Checking Job Performance
-
-- Connect to nodes where jobs are running and use tools like `top` or `gpustat` (for GPU jobs) to monitor performance.
-- Use `srun` with the job ID and node name to access the node: `srun --jobid=12345 -w c001 --pty /bin/bash`.
-- For GPU codes, use `ml nvitop; nvitop` to check GPU utilization.
-- After job completion, use the `seff` command (`seff JobID`) to analyze job performance and resource efficiency.
-
-#### GPU Job Tips
-
-- Do not request more cores than needed for the GPUs. Requesting extra cores will assign additional GPUs, potentially wasting resources. See [](#compute-nodes) for the core-to-GPU mapping on each partition.
-
-### Guidelines for Effective Communication with Support Staff
-
-When contacting Rockfish support, it's essential to provide comprehensive information to facilitate a quick and efficient resolution.
-
-#### Essential Information to Include
-
-- **Rockfish User ID:** Your unique identifier on the cluster.
-- **Job ID:** If the issue pertains to a specific job.
-- **Batch Submission Script:** The full path to the script you used to submit the job.
-- **Error Messages:**  Any specific error messages you encountered.
-- **Snapshot with Errors:** If possible, include a screenshot or log file snippet showing the errors.
-- **Detailed Problem Description:**  Clearly and thoroughly describe the problem you're facing.
-
-By following these guidelines, you can effectively communicate with the Rockfish support staff and ensure a smoother troubleshooting process.
+- **Rockfish User ID** and **Job ID** (if applicable)
+- **Batch submission script** (full path)
+- **Error messages** and screenshots or log snippets
+- **Detailed problem description**
 
 :::{bibliography}
 :::
