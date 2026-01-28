@@ -1,12 +1,12 @@
 Computation in economics and the social sciences enables researchers to tackle questions and analyze datasets that were previously intractable. The availability of large-scale datasets, the development of powerful computational tools, and the increasing adoption of computational methods across these disciplines have driven growing demand for high-performance computing resources.
 
-To meet this rising demand for computational power, institutions like [Johns Hopkins University](https://www.jhu.edu) have invested heavily in high-performance computing (HPC) resources, such as the Rockfish cluster managed by the [Advanced Research Computing at Hopkins (ARCH)](https://www.arch.jhu.edu/). HPC facilities like Rockfish provide researchers with access to a vast pool of computational resources, including high-performance compute nodes, GPU nodes for accelerated computing, and large-scale storage systems. These resources are essential for conducting computationally intensive research in economics and other social sciences, allowing researchers to run complex simulations, analyze massive datasets, and develop sophisticated models that push the boundaries of their respective fields.
+To meet this rising demand for computational power, institutions like [Johns Hopkins University](https://www.jhu.edu) have invested heavily in high-performance computing (HPC) resources, such as the Rockfish cluster managed by the [Advanced Research Computing at Hopkins (ARCH)](https://www.arch.jhu.edu/). HPC facilities like Rockfish provide researchers with access to a vast pool of computational resources, including high-performance compute nodes, GPU nodes for accelerated computing, and large-scale storage systems. These resources support computationally intensive research in economics and other social sciences, including large-scale simulations, data analysis, and numerical modeling.
 
 This report provides an overview of the resources available to researchers on the Rockfish cluster. It is intended to provide a guide for researchers who are new to the cluster, as well as a reference for those who are familiar with the cluster.
 
 # Rockfish and High-Performance Computing (HPC)
 
-Rockfish is the flagship High Performance Computing resource at Johns Hopkins University. It is a shared facility where researchers from various departments, including Economics and other Social Sciences, can contribute computational resources in a homogeneous environment. This setup not only provides stability and priority usage for those contributing resources, but also benefits all researchers by expanding the available computational power for everyone through efficient resource load-balancing.
+Rockfish is the flagship high-performance computing resource at Johns Hopkins University. It is a shared facility where researchers from various departments, including Economics and other Social Sciences, can contribute computational resources in a homogeneous environment. This setup not only provides stability and priority usage for those contributing resources, but also benefits all researchers by expanding the available computational power for everyone through efficient resource load-balancing.
 
 ## The Evolution of ARCH and its Flagship Cluster, Rockfish
 
@@ -16,12 +16,27 @@ ARCH's flagship HPC cluster, **Rockfish**, succeeded the previous Bluecrab clust
 
 ## The Condominium Model
 
-A distinctive feature of Rockfish is its "condominium" model {cite:p}`arch_condos`, which allows principal investigators (PIs) from various schools within Hopkins to contribute their own computational resources to the cluster. These condos can encompass a range of computational hardware, such as compute nodes, GPU nodes, sub-racks, management and Infiniband switches, and necessary software licenses. In exchange for the administration and integration of their condo, PIs agree to allow the use of their idling condo nodes by other researchers. This reciprocal access arrangement fosters a culture of resource sharing and maximizes the utilization of the cluster. PIs receive a walltime allocation equivalent to their purchase, allowing their users to access as many cores as possible within that allocation. This unique model not only expands the overall computing power of the cluster but also fosters a collaborative environment where resources are shared and utilized effectively.
+A distinctive feature of Rockfish is its "condominium" model {cite:p}`arch_condos`, which allows principal investigators (PIs) from various schools within Hopkins to contribute their own computational resources to the cluster. These condos can include compute nodes, GPU nodes, sub-racks, management and Infiniband switches, and necessary software licenses. In exchange for the administration and integration of their condo, PIs agree to allow the use of their idling condo nodes by other researchers. PIs receive a walltime allocation equivalent to their purchase, allowing their users to access as many cores as possible within that allocation.
 
+### Benefits
+
+- **Priority use and increased allocation:** PIs receive dedicated walltime hours equivalent to their hardware investment, granting them priority access to their contributed resources.
+- **Shared resources and load balancing:** Idling condo nodes are available to other researchers, maximizing cluster utilization.
+- **Reduced infrastructure costs:** Contributing to the shared cluster eliminates the need for PIs to build and maintain separate HPC infrastructure.
+- **Stable system management:** ARCH administers the entire cluster, including integrated condos, ensuring stability and consistency.
+
+### Requirements
+
+- **Homogeneity:** PIs must consult with the ARCH director to ensure proposed hardware configurations align with the existing cluster.
+- **Warranty:** A minimum 5-year warranty is required for all contributed hardware.
+- **Hardware lifespan:** Hardware is typically kept for five years and may be declared surplus afterward if repairs become difficult.
+- **Power and cooling costs:** The contributing PI's School covers additional power and cooling costs based on resource utilization.
+
+For more information about the condo model or colocation services, contact ARCH at `help@rockfish.jhu.edu`.
 
 ## Compute Nodes
 
-Compute nodes are the individual computers that make up a High Performance Computing (HPC) cluster like Rockfish {cite:p}`arch_hardware`. Each node contains resources like CPUs, memory, and potentially GPUs, that are used to execute user jobs. Rockfish has different types of compute nodes, including:
+Compute nodes are the individual computers that make up a high-performance computing (HPC) cluster like Rockfish {cite:p}`arch_hardware`. Each node contains resources like CPUs, memory, and potentially GPUs, that are used to execute user jobs. Rockfish has different types of compute nodes, including:
 
 - **Regular Compute Nodes:** These are the standard compute nodes on Rockfish. They are organized into partitions/queues that dictate how resources are allocated based on the type and size of the job.
 - **Large Memory (LM) Nodes:** Rockfish has a limited number of large memory nodes for jobs requiring more than 192GB of memory.
@@ -66,9 +81,8 @@ All allocations on Rockfish are subject to limits based on the type of resource 
 - **Resource Requirements:** Justification for the specific types of resources requested, whether it's CPU cores, large memory nodes, or GPU nodes. The proposal should explain why these resources are necessary for the project and how they will be utilized.
 - **Alignment with Research Goals:** The proposal should clearly articulate how the requested allocation aligns with the overall research goals and objectives. Highlighting the potential impact and significance of the research outcomes can strengthen the justification.
 
-:::\{important}
-
-A video tutorial on using the Coldfront portal is available to guide PIs and users through the process of requesting allocations, managing accounts, and adding users to allocations. The video can be accessed at: https://youtu.be/L6zvLBK5Mss. This tutorial covers the steps involved in creating an account on ColdFront, requesting an allocation, adding user accounts, and designating a proxy. This video tutorial is a valuable resource for anyone new to Rockfish or ColdFront, providing a step-by-step walkthrough of the essential processes involved in gaining access to and managing resources on the Rockfish cluster.
+:::{important}
+A video tutorial on using the ColdFront portal is available at: <https://youtu.be/L6zvLBK5Mss>. The tutorial covers creating an account on ColdFront, requesting an allocation, adding user accounts, and designating a proxy.
 :::
 
 ## Connecting to Rockfish
@@ -77,14 +91,14 @@ To connect to the Rockfish cluster, users can establish an SSH connection using 
 
 Regardless of the operating system or terminal application used, the following connection parameters are required:
 
-- **Host Name:** login.rockfish.jhu.edu This hostname directs the SSH connection request to the appropriate login node on the Rockfish cluster.
-- **Port:** 22 Port 22 is the standard port for SSH connections and is used by default unless specified otherwise.
-- **Login Credentials:** Users will need to enter their Rockfish UserID, which is typically their JHED ID (Johns Hopkins Enterprise Directory ID), and their corresponding password to authenticate and establish the SSH connection.
+- **Host Name:** `login.rockfish.jhu.edu`
+- **Port:** 22 (the standard SSH port)
+- **Login Credentials:** Rockfish UserID (typically the user's JHED ID) and corresponding password.
 
 :::{important} Several SSH command variations can be used to connect to Rockfish:
 
 - `ssh YourUserId@login.rockfish.jhu.edu`
-- `ssh login.rockfish.jhu.edu –l YourUserId`
+- `ssh login.rockfish.jhu.edu -l YourUserId`
 - `ssh -XY YourUserId@login.rockfish.jhu.edu`
 
 The last command includes options for X11 forwarding (`-XY`), allowing graphical applications running on Rockfish to be displayed on the user's local machine.
@@ -101,7 +115,8 @@ Rockfish supports various methods for transferring data between the cluster and 
 ## Modules for Software Management
 
 The Rockfish cluster employs a module system, specifically Lua modules version 8.3 developed at TACC {cite:p}`tacc_lmod`, to manage software packages and user environments. Modules provide a way to dynamically modify the shell environment, ensuring that the necessary software and libraries are accessible for specific applications.
-Loading and Unloading Modules
+
+### Loading and Unloading Modules
 
 - `module load` (or `ml`): This command loads a specific module, making the corresponding software or package available in the user's environment. For example, to use the Intel compilers and Intel MPI libraries, a user would execute the command `module load intel intel-mpi intel-mkl`.
 - `module unload` (or `ml -`): This command unloads a previously loaded module, removing it from the user's environment. To unload the Intel MPI module, for instance, a user would use the command `module unload intel-mpi`.
@@ -133,8 +148,13 @@ There are two primary commands for viewing allocation usage:
 
 The output of these commands typically includes details such as the allocation name, user ID, core hours used, total core hours allocated, and the percentage of the allocation consumed. This information is valuable for both PIs and users to monitor resource usage, track progress, and plan future resource requirements.
 
-For a more detailed breakdown of allocation usage, there is a more advanced command: `sacctmgr -p list associations user=YourUserId format=Account,User,Partition,Qos,DefaultQOS tree | column -ts'|'`
-Let's break down this command and its components:
+For a more detailed breakdown of allocation usage, use:
+
+```bash
+sacctmgr -p list associations user=YourUserId format=Account,User,Partition,Qos,DefaultQOS tree | column -ts'|'
+```
+
+The components of this command are:
 
 - `sacctmgr`: This is the Slurm Account Manager command, a powerful tool for managing accounts, allocations, and resource usage on Rockfish.
 - `-p list associations`: This option instructs sacctmgr to list the associations between users and various allocation parameters.
@@ -150,11 +170,11 @@ Let's break down this command and its components:
 
 By using this command, users can obtain a comprehensive view of their allocation details, including the partitions they can access, the quality of service settings, and their default quality of service. This information can be helpful for understanding the resources available to them and for troubleshooting any allocation-related issues they might encounter.
 
-# Running Jobs on Rockfish Using SLURM
+# Running Jobs on Rockfish Using Slurm
 
 ## Slurm Overview
 
-Rockfish uses Slurm to manage resource scheduling and job submissions {cite:p}`arch_rockfish_docs`. Slurm, which stands for Simple Linux Universal Resource Manager, is a widely used open-source workload manager in the HPC field.
+Rockfish uses Slurm to manage resource scheduling and job submissions {cite:p}`arch_rockfish_docs`. Slurm is a widely used open-source workload manager in the HPC field, developed by SchedMD.
 
 ### Workload Manager Functions
 
@@ -176,9 +196,21 @@ Interactive sessions on Rockfish enable researchers to directly engage with comp
 
 To initiate an interactive session on Rockfish, users employ the `interact` command. This command allows for the specification of several crucial parameters to tailor the session to the user's needs:
 
-- Partition: The `-p` flag designates the specific partition where the interactive session should run. Rockfish offers various partitions optimized for different job types, including 'shared' for general-purpose computing, 'parallel' for parallel jobs, 'a100' and 'ica100' for GPU-accelerated tasks, 'bigmem' for memory-intensive workloads, and 'express' for short, interactive jobs. Choosing the appropriate partition ensures efficient resource allocation and optimal performance for the intended task. For instance, to request an interactive session on the 'debug' partition:
-- Cores: The `-c` flag determines the number of cores to be allocated for the interactive session. Requesting the appropriate number of cores is essential for achieving the desired level of parallelism and computational power. For example, to request an interactive session with 2 cores:
-- Time: The `-t` flag sets the duration of the interactive session, expressed in minutes or in the format `HH:MM:SS`. Accurately estimating the required time helps prevent session termination before task completion. For instance, to request a 120-minute interactive session:or a 12-hour session:
+- Partition: The `-p` flag designates the specific partition where the interactive session should run. Rockfish offers various partitions optimized for different job types, including `shared` for general-purpose computing, `parallel` for parallel jobs, `a100` and `ica100` for GPU-accelerated tasks, `bigmem` for memory-intensive workloads, and `express` for short, interactive jobs.
+- Cores: The `-c` flag determines the number of cores to be allocated for the interactive session.
+- Time: The `-t` flag sets the duration of the interactive session, expressed in minutes or in the format `HH:MM:SS`.
+
+For example, to request an interactive session on the `shared` partition with 2 cores for 120 minutes:
+
+```bash
+interact -p shared -c 2 -t 120
+```
+
+Or a 12-hour session on a GPU partition:
+
+```bash
+interact -p a100 -c 12 -t 12:00:00 -g 1
+```
 
 Once the interactive session is no longer needed, users can gracefully exit using the exit command. This releases the allocated resources, making them available for other users or jobs.
 
@@ -192,7 +224,7 @@ A Slurm batch script is typically structured into three main components:
 
 - **Resource Requests:** This section, delineated by `#SBATCH` directives, outlines the computational resources needed for the job. These directives convey instructions to the Slurm scheduler, detailing parameters like the job name, wall time, number of nodes, cores per task, memory allocation, and specific hardware requirements such as GPUs.
 
-- **Dependencies:** This part of the script handles the setup of the job's software environment. It typically includes loading the required modules for compilers, libraries, and applications. Modules, managed by Lmod, provide a standardized way to access and manage different software versions on Rockfish, ensuring consistency and reproducibility. For example, to load the Intel compiler module:
+- **Environment Setup:** This part of the script handles the setup of the job's software environment. It typically includes loading the required modules for compilers, libraries, and applications. Modules, managed by Lmod, provide a standardized way to access and manage different software versions on Rockfish, ensuring consistency and reproducibility. For example, to load the Intel compiler module:
 
 ```bash
 ml intel/2022.2 
@@ -238,7 +270,7 @@ mpirun -np 8 ./my_program
    - `#SBATCH --mail-type=END`: Configures email notifications to be sent at the end of the job.
    - `#SBATCH --mail-user=your_email@example.com`: Specifies the email address to receive job notifications.
 
-1. **Dependencies:**
+1. **Environment Setup:**
 
    - `ml intel intel-mpi intel-mkl`: Loads the necessary modules for using the Intel compilers, MPI library, and Math Kernel Library.
 
@@ -276,7 +308,7 @@ After submission, Slurm assigns a unique job ID to your job. You can check the s
 You can also check the status of a specific job using `squeue` followed by the job ID:
 
 ```bash
-squeue 12345
+squeue -j 12345
 ```
 
 ### Viewing Job Outputs
@@ -306,7 +338,7 @@ Job arrays provide a powerful mechanism for submitting and managing a large numb
 
 **Defining a Job Array**
 
-The `#SBATCH --array` directive defines a job array in a Slurm script.  It takes an array specification, defining the range and step size for the array indices. For example:
+The `#SBATCH --array` directive defines a job array in a Slurm script. It takes an array specification defining the range, optional step size (`:N`), and optional concurrency limit (`%N`) for the array indices. For example:
 
 ```bash
 #SBATCH --array=1-20
@@ -381,7 +413,7 @@ Slurm flags, specified in the resource request section of your batch script usin
 - **`--job-name=[job_name]`**:  Assigns a descriptive name to your job, making it easier to identify and track in the queue.
 - **`--output=[output_file]`**: Specifies the file where the standard output of your job will be written.
 - **`--error=[error_file]`**: Specifies the file where error messages generated by your job will be written.
-- **`--partition=[partition_name]`**:  Specifies the partition or queue where your job should be submitted. You can use `sinfo` to list available partitions. Rockfish offers various partitions, including "shared" for jobs that can share resources, "parallel" for exclusive node access, "a100" for GPU jobs, and "bigmem" for jobs needing large memory.
+- **`--partition=[partition_name]`**:  Specifies the partition or queue where your job should be submitted. You can use `sinfo` to list available partitions. Rockfish offers various partitions, including "shared" for jobs that can share resources, "parallel" for exclusive node access, "a100" and "ica100" for GPU jobs, and "bigmem" for jobs needing large memory.
 - **`--nodes=[number_of_nodes]`**: Specifies the number of compute nodes required for your job. You can specify a range (e.g., `2-4`) to give Slurm flexibility in allocation.
 - **`--ntasks=[number_of_tasks]`**:  Specifies the total number of tasks or processes to be launched for your job. If you use both `--ntasks` and `--nodes`, Slurm will distribute the tasks across the requested nodes. However, using `--ntasks-per-node` instead of `--ntasks` for MPI jobs is recommended to avoid confusion.
 - **`--ntasks-per-node=[number_of_tasks]`**: Specifies the number of tasks to be launched on each node. This is particularly relevant for MPI jobs where you need to control the number of processes per node.
@@ -393,7 +425,7 @@ Slurm flags, specified in the resource request section of your batch script usin
 - **`--mem=[memory_size]`**: Specifies the total amount of memory per node required for your job. You can specify units like `M` (megabytes), `G` (gigabytes), or `T` (terabytes).
 - **`--mem-per-cpu=[memory_size]`**: Specifies the amount of memory required per CPU core. This is useful for jobs where you need to control memory allocation per task.
 - **`--gres=gpu:[number_of_gpus]`**: Requests a specific number of GPUs for your job. Use this flag when submitting jobs to GPU-enabled partitions like 'a100'.
-- **`--array=[array_spec]`**:  Defines a job array. The `array_spec` determines the range and step size of the array indices.
+- **`--array=[array_spec]`**:  Defines a job array. The `array_spec` determines the range of array indices, with optional step size (`:N`) and concurrency limit (`%N`).
 
 ### Important Flags for Efficient Job Management
 
@@ -431,7 +463,7 @@ echo "Completed job $SLURM_JOBID"
 
 1. **Resource Requests:**  Requests 24 cores on a single node from the "shared" partition with a 24-hour time limit.
 
-1. **Dependencies:** `module list` displays the currently loaded modules. You may need to load specific modules before running your code, for example:
+1. **Environment Setup:** `module list` displays the currently loaded modules. You may need to load specific modules before running your code, for example:
 
    ```bash
    module load intel intel-mpi
@@ -501,14 +533,14 @@ matlab -nodisplay -singleCompThread -r "myMatlabFunction($SLURM_ARRAY_TASK_ID), 
 **Explanation:**
 
 - **Job Array:**  The `--array=1-20` flag creates a job array with 20 tasks, each identified by a unique `$SLURM_ARRAY_TASK_ID` ranging from 1 to 20.
-- **Multiple Tasks Per Array Element:** The `--ntasks=4` flag specifies that each task in the array will use 4 cores, enabling parallel execution within each array element.
+- **Multiple Tasks Per Array Element:** The `--ntasks=4` flag specifies that each array element will launch 4 tasks (processes), each using 1 core by default.
 - **Matlab Execution:**  The `matlab` command runs a Matlab script (`myMatlabFunction`) with the task ID as input, pauses for 20 seconds, and then exits.
 
-### Job Array with a Specified Step Size
+### Job Array with a Concurrency Limit
 
 ```bash
 #!/bin/bash -l 
-#SBATCH --job-name=StepArray
+#SBATCH --job-name=ConcurrencyArray
 #SBATCH --time=1:00:00 
 #SBATCH --array=1-100%10
 #SBATCH --ntasks-per-node=1 
@@ -566,17 +598,20 @@ echo "Completed MPI job $SLURM_JOBID"
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=12
 #SBATCH --cpus-per-task=2 
-#SBATCH --partition=shared 
-#SBATCH --mail-type=end 
+#SBATCH --partition=parallel
+#SBATCH --mail-type=end
 #SBATCH --mail-user=your_email@example.com
 
-# Load necessary modules (adjust as needed) 
+# Load necessary modules (adjust as needed)
 module load intel intel-mpi
 
-# Compile the mixed MPI/OpenMP program (adjust compiler and filenames as needed) 
-mpiicc -qopenmp -o my_mixed_program.x my_mixed_program.c 
+# Set OpenMP threads per MPI task
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 
-# Run the program 
+# Compile the mixed MPI/OpenMP program (adjust compiler and filenames as needed)
+mpiicc -qopenmp -o my_mixed_program.x my_mixed_program.c
+
+# Run the program
 mpirun -np 24 ./my_mixed_program.x > output.log
 
 echo "Completed mixed MPI/OpenMP job $SLURM_JOBID"
@@ -584,7 +619,7 @@ echo "Completed mixed MPI/OpenMP job $SLURM_JOBID"
 
 **Explanation:**
 
-- **Resource Allocation:**  The script requests 2 nodes with 12 tasks per node and 2 CPUs per task.
+- **Resource Allocation:**  The script requests 2 nodes with 12 tasks per node and 2 CPUs per task. Multi-node jobs require the `parallel` partition.
 - **Compilation:**  The  `mpiicc`  compiler, with the  `-qopenmp`  flag, is used to compile the mixed MPI/OpenMP program.
 - **Execution:** The `mpirun` command launches the program, and the output is redirected to the specified file.
 
@@ -594,13 +629,13 @@ Remember that these are example scripts, and you'll need to tailor them to your 
 
 ## Using Singularity Containers on Rockfish
 
-**Singularity** is available on the compute nodes of the Rockfish cluster without loading a module. (The version available may change over time; consult the [ARCH documentation](https://docs.arch.jhu.edu/) for the current version.) To use Singularity, request an interactive session on a compute node using the `interact` command, specifying the desired partition, number of cores, and time limit:
+**Singularity** (now known as **Apptainer** following its 2021 move to the Linux Foundation) is available on the compute nodes of the Rockfish cluster without loading a module. (The version available may change over time; consult the [ARCH documentation](https://docs.arch.jhu.edu/) for the current version.) To use Singularity, request an interactive session on a compute node using the `interact` command, specifying the desired partition, number of cores, and time limit:
 
 ```bash
 interact -p parallel -n 1 -c 1 -t 120
 ```
 
-This command requests an interactive session on the `parallel` partition with 1 node, 1 core, and a time limit of 120 minutes. Once you have an interactive session, you can use basic Singularity commands.
+This command requests an interactive session on the `parallel` partition with 1 task, 1 core, and a time limit of 120 minutes. Once you have an interactive session, you can use basic Singularity commands.
 
 ### Singularity Commands
 
@@ -759,45 +794,6 @@ The following examples demonstrate using `lmod.R` to load and manage R submodule
 
 **Note:** Using `lmod.R` within RStudio has not been specifically documented, but the same principles of loading and managing modules should apply. The path to the `lmod.R` script may differ within the RStudio environment.
 
-## Rockfish Condo Model: Integrating Resources, Benefits, and Contact Information
-
-The Rockfish condo model allows researchers to integrate their personal computational resources into the main Rockfish cluster at Johns Hopkins University. This model offers various benefits and has specific requirements for participation.
-
-### Integrating Personal Resources into the Main Cluster
-
-The condo model allows Principal Investigators (PIs) to contribute various computing resources to the Rockfish cluster, enhancing the overall computational power available to the research community. These contributions, known as "condos," can include:
-
-- Compute nodes
-- GPU nodes
-- Sub-racks
-- Management and Infiniband switches
-- Necessary software licenses
-
-The integration of these resources creates a more homogenous environment, benefiting both the condo contributors and the broader research community.
-
-### Benefits of the Condo Model
-
-PIs who choose to contribute condos to the Rockfish cluster enjoy several benefits:
-
-- **Priority Use and Increased Allocation:** PIs receive a dedicated allocation of walltime hours equivalent to their hardware investment, allowing them priority access to their contributed resources. They can utilize as many cores as their allocation permits.
-- **Shared Resources and Load Balancing:**  While PIs have priority access to their condos, the model encourages the use of idling condo nodes by other researchers when not actively used by the contributing PI, maximizing resource utilization and enabling load balancing across the cluster.
-- **Reduced Infrastructure Costs:** Contributing to the shared Rockfish cluster eliminates the need for PIs to design, build, and maintain their own separate HPC infrastructure, reducing costs and administrative burden.
-- **Stable System Management:** ARCH provides administration and management for the entire Rockfish cluster, including integrated condos, ensuring stability and consistency in the computing environment.
-
-### Requirements of the Condo Model
-
-The condo model has certain requirements to maintain a cohesive and efficient shared computing environment:
-
-- **Funding:** PIs are encouraged to secure funding for their condo contributions.
-- **Homogeneity:** PIs need to consult with the ARCH director to ensure their proposed hardware configurations align with the existing cluster and technological advancements.
-- **Warranty:**  A minimum 5-year warranty is required for all contributed hardware.
-- **Hardware Lifespan:** Hardware is typically kept for five years and may be declared surplus afterward if repairs become difficult.
-- **Power and Cooling Costs:** The contributing PI's School covers additional power and cooling costs based on resource utilization.
-
-### Contact Information for Condo and Colocation Requests
-
-For more information about the condo model, colocation services, or to initiate the process, researchers can contact ARCH at `help@rockfish.jhu.edu`. This contact information is provided in the context of colocation services but is likely applicable to condo inquiries as well.
-
 ## Support, Resources, and Best Practices for Rockfish
 
 ARCH provides a range of support resources and best practices for utilizing the Rockfish cluster.
@@ -832,7 +828,7 @@ The following best practices help optimize job submission and resource utilizati
 
 #### Memory Management
 
-- For the parallel queue, each node has 48 cores and roughly 4 GB of memory per core.
+- For the parallel queue, each standard compute node has 48 cores and roughly 4 GB of memory per core.
 - Job memory is determined by the number of tasks (`--ntasks-per-node`, "n"). If "n" is 1, the job has a maximum of 4 GB of memory.
 - Requesting more cores increases the available memory. For a serial job needing more than 4 GB, requesting 2 cores will double the memory.
 
