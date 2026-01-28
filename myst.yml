@@ -1,0 +1,36 @@
+# See docs at: https://mystmd.org/guide/frontmatter
+version: 1
+project:
+  id: 88a20efc-3233-4a40-9ab0-2fa01e4cd814
+  title: Computation in the Social Sciences at Johns Hopkins
+  # description:
+  # keywords: []
+  authors:
+    - name: Alan Lujan
+      orcid: 0000-0002-5289-7054
+      email: alujan@jhu.edu
+      url: https://advanced.jhu.edu/directory/alan-lujan/
+      affiliation:
+        - institution: Johns Hopkins University AAP
+          department: Applied Economics
+  github: https://github.com/llorracc/JHUSocSciComputation
+  banner: banner.jpg
+  abbreviations:
+    HPC: High-Performance Computing
+    ARCH: Advanced Research Computing at Hopkins
+    GPU: Graphics Processing Unit
+    CPU: Central Processing Unit
+    MARCC: Maryland Advanced Research Computing Center
+    IDIES: Institute for Data Intensive Engineering and Science
+  bibliography:
+    - references.bib
+  open_access: true
+  license: CC-BY-4.0
+  subject: Economics
+  venue: Johns Hopkins University
+  # To autogenerate a Table of Contents, run "myst init --write-toc"
+site:
+  template: article-theme
+  # options:
+  #   favicon: favicon.ico
+  #   logo: site_logo.png
