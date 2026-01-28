@@ -34,6 +34,7 @@ A distinctive feature of Rockfish is its "condominium" model {cite:p}`arch_condo
 
 For more information about the condo model or colocation services, contact ARCH at `help@rockfish.jhu.edu`.
 
+(compute-nodes)=
 ## Compute Nodes
 
 Compute nodes are the individual computers that make up a high-performance computing (HPC) cluster like Rockfish {cite:p}`arch_hardware`. Each node contains resources like CPUs, memory, and potentially GPUs, that are used to execute user jobs. Rockfish has different types of compute nodes, including:
@@ -42,6 +43,7 @@ Compute nodes are the individual computers that make up a high-performance compu
 - **Large Memory (LM) Nodes:** Rockfish has a limited number of large memory nodes for jobs requiring more than 192GB of memory.
 - **GPU Nodes:** Rockfish offers GPU nodes equipped with NVIDIA A100 GPUs for accelerated computing {cite:p}`arch_gpu_jobs`. These nodes are available through two partitions: the `a100` partition, which provides A100 GPUs with 40GB of memory each (12 cores per GPU, 48 cores per node), and the `ica100` partition, which provides A100 GPUs with 80GB of memory each (16 cores per GPU, 64 cores per node) {cite:p}`arch_partitions`. Each GPU is mapped to a specific number of cores, and requesting more cores than the mapped amount will automatically assign additional GPUs to the job, potentially leading to wasted resources.
 
+(memory)=
 ## Memory
 
 The memory available for a job on Rockfish is determined by the number of tasks requested per node {cite:p}`arch_faq`. Each core is associated with approximately 4GB of memory. By default, each core has 4GB of memory allocated to it. If a job requires more memory, users can request additional cores; each additional core adds 4GB to the job's total available memory.
@@ -186,10 +188,11 @@ A workload manager like Slurm provides several essential functions for managing 
 
 ### Key Concepts
 
-- Interactive sessions: Interactive sessions allow users to interact directly with compute nodes for tasks like code development, debugging, and data exploration. Users can request interactive sessions using the "interact" command, which reserves resources for a specified duration. These sessions provide a command-line interface on the compute node, allowing users to execute commands and run their code interactively.
-- Batch jobs: Batch jobs are submitted to the queue and run non-interactively, executing a predefined set of commands in a script. Users define job parameters like resource requirements (e.g., number of nodes, cores, memory) and wall time in a Slurm script, which is then submitted using the "sbatch" command. Batch jobs are well-suited for long-running computations or tasks that don't require user interaction.
-- Job arrays: Job arrays enable users to submit a collection of similar jobs that differ only in input parameters or data. This simplifies the submission and management of a large number of related tasks. Each job in an array is assigned a unique task ID, allowing for efficient parallelization and execution of tasks that share common code and dependencies. Job arrays are particularly useful for parameter sweeps, ensemble simulations, and data processing workflows that involve running the same code on different input sets.
+- [Interactive sessions](#interactive-sessions) allow direct interaction with compute nodes for code development, debugging, and data exploration.
+- [Batch jobs](#slurm-batch-scripts) run non-interactively, executing a predefined set of commands in a Slurm script submitted to the queue.
+- [Job arrays](#job-arrays) enable submission of many similar jobs that differ only in input parameters, simplifying parameter sweeps and ensemble simulations.
 
+(interactive-sessions)=
 ## Interactive Sessions
 
 Interactive sessions on Rockfish enable researchers to directly engage with compute nodes, facilitating tasks such as code development, debugging, and interactive data analysis. Instead of submitting jobs to a queue, interactive sessions provide an immediate command-line interface on the allocated compute node, allowing for real-time interaction with running processes and data.
@@ -214,6 +217,7 @@ interact -p a100 -c 12 -t 12:00:00 -g 1
 
 Once the interactive session is no longer needed, users can gracefully exit using the exit command. This releases the allocated resources, making them available for other users or jobs.
 
+(slurm-batch-scripts)=
 ## Slurm Batch Scripts on Rockfish
 
 Slurm batch scripts are essential for running non-interactive jobs on Rockfish, enabling researchers to execute computationally demanding tasks without continuous user interaction. These scripts, written in Bash, serve as blueprints for job execution, defining the necessary resources, dependencies, and execution steps for a given task.
@@ -259,24 +263,11 @@ mpirun -np 8 ./my_program
 
 1. **Shebang:** The `#!/bin/bash` line indicates that the script should be interpreted using the Bash shell.
 
-1. **Resource Requests:**
+1. **Resource Requests:** The `#SBATCH` directives specify the job name, output/error files, partition, node count, tasks per node, time limit, and email notifications. See [](#slurm-flags) for a full reference of available flags.
 
-   - `#SBATCH --job-name=my_job`: Assigns a descriptive name to the job, "my_job".
-   - `#SBATCH --output=my_job.out` and `#SBATCH --error=my_job.err`: Redirects the standard output and error streams to files named 'my_job.out' and 'my_job.err', respectively, for logging purposes.
-   - `#SBATCH --partition=shared`: Specifies the 'shared' partition for the job.
-   - `#SBATCH --nodes=1`: Allocates 1 compute node for the job.
-   - `#SBATCH --ntasks-per-node=8`: Requests 8 tasks or processes to be launched on the node.
-   - `#SBATCH --time=1:00:00`: Sets a maximum wall time of 1 hour for the job.
-   - `#SBATCH --mail-type=END`: Configures email notifications to be sent at the end of the job.
-   - `#SBATCH --mail-user=your_email@example.com`: Specifies the email address to receive job notifications.
+1. **Environment Setup:** `ml intel intel-mpi intel-mkl` loads the Intel compilers, MPI library, and Math Kernel Library.
 
-1. **Environment Setup:**
-
-   - `ml intel intel-mpi intel-mkl`: Loads the necessary modules for using the Intel compilers, MPI library, and Math Kernel Library.
-
-1. **Job Steps:**
-
-   - `mpirun -np 8 ./my_program`:  Executes the compiled program `my_program` using the `mpirun` command, launching 8 MPI processes. The output of the program will be directed to the 'my_job.out' file.
+1. **Job Steps:** `mpirun -np 8 ./my_program` executes the compiled program using 8 MPI processes, with output directed to `my_job.out`.
 
 **Submitting the Job:**
 
@@ -288,24 +279,12 @@ sbatch my_job.slurm
 
 Slurm will then queue the job and allocate the requested resources when they become available. The job's progress and output can be monitored using various Slurm commands such as `squeue`, `sqme`, and `scontrol`.
 
+(submitting-monitoring)=
 ## Submitting and Monitoring Jobs
-
-### Submitting Jobs
-
-To run a job on Rockfish, you need to create a Slurm script that includes directives for resource requests, dependencies, and job steps. Once you save the script to a file, you can submit it using the `sbatch` command, followed by the script's filename. For instance:
-
-```bash
-sbatch my_job.slurm
-```
 
 ### Checking Job Status
 
-After submission, Slurm assigns a unique job ID to your job. You can check the status of your submitted jobs using the following commands:
-
-- **`squeue`**: This command lists all jobs in the queue, including those pending, running, and completed. It provides information like job ID, partition, name, user, state, time elapsed, time limit, nodes allocated, and the reason for any pending status.
-- **`sqme`**: This script, specific to Rockfish, shows only the jobs belonging to the current user, simplifying job tracking.
-
-You can also check the status of a specific job using `squeue` followed by the job ID:
+After submitting a job with `sbatch` (see [](#slurm-batch-scripts)), Slurm assigns a unique job ID. You can monitor jobs using the commands described in [](#slurm-commands). To check a specific job:
 
 ```bash
 squeue -j 12345
@@ -332,6 +311,7 @@ Jobs submitted to Rockfish can be in various states, reflecting their progress a
 
 This section explores advanced Slurm features, focusing on job arrays, essential environment variables, and key points for effective Slurm usage on the Rockfish cluster.
 
+(job-arrays)=
 ### Job Arrays for Efficient Job Submission
 
 Job arrays provide a powerful mechanism for submitting and managing a large number of similar jobs efficiently.  Instead of creating and submitting individual scripts for each job, you can define a single script with an array specification, instructing Slurm to create multiple job instances based on the provided parameters.
@@ -372,14 +352,7 @@ Slurm provides several environment variables that can be accessed within your sc
 - **`SLURM_SUBMIT_HOST`:**  The hostname of the machine from which the job was submitted.
 - **`SLURM_JOB_NODELIST`:**  A list of the compute nodes allocated to the job.
 
-### Key Points for Effective Slurm Usage
-
-- **Interactive vs. Batch Jobs:** Interactive jobs (`interact` command) are suitable for tasks that require real-time user interaction, such as code development, debugging, and interactive data exploration. Batch jobs (`sbatch` command) are better for long-running, computationally intensive tasks that can run without user intervention.
-- **Job Array Advantages:**  Job arrays simplify the submission and management of multiple similar jobs. They are particularly useful for parameter sweeps, ensemble simulations, and other tasks involving repetitive computations with varying inputs.
-- **Resource Allocation Parameters:**  Carefully select resource allocation parameters in your Slurm scripts to ensure efficient resource utilization and timely job completion. Accurately estimate the required wall time, number of nodes, cores per task, and memory to prevent job termination due to resource limitations or excessive queue wait times. The examples throughout this report demonstrate `#SBATCH` directives for requesting different resources, including GPUs.
-
-By understanding these advanced Slurm features and employing effective job submission strategies, researchers can maximize their productivity and efficiently utilize the computational resources available on Rockfish.
-
+(slurm-commands)=
 ## Slurm Commands and Flags
 
 This section covers useful Slurm commands and flags for job management on the Rockfish cluster.
@@ -406,6 +379,7 @@ The following Slurm commands are essential for job management on Rockfish:
 
 - **`sacct`**: This command allows you to review accounting information about completed jobs. It provides detailed usage data for jobs submitted by a specific user since a particular date. You can use it to track resource consumption, analyze job trends, and generate reports.
 
+(slurm-flags)=
 ### Common Slurm Flags and Their Usage
 
 Slurm flags, specified in the resource request section of your batch script using `#SBATCH` directives, control job parameters and resource allocation.  Here's a description of commonly used Slurm flags:
@@ -427,52 +401,7 @@ Slurm flags, specified in the resource request section of your batch script usin
 - **`--gres=gpu:[number_of_gpus]`**: Requests a specific number of GPUs for your job. Use this flag when submitting jobs to GPU-enabled partitions like 'a100'.
 - **`--array=[array_spec]`**:  Defines a job array. The `array_spec` determines the range of array indices, with optional step size (`:N`) and concurrency limit (`%N`).
 
-### Important Flags for Efficient Job Management
-
-For efficient job management, prioritize the following flags:
-
-- **`--time`**:  Accurately estimate and specify the wall time to prevent job termination and optimize resource utilization.
-- **`--nodes`, `--ntasks`, and `--cpus-per-task`**:  Carefully choose the appropriate combination of these flags based on your job's parallelism and resource needs. For MPI jobs, prioritize `--ntasks-per-node` over `--ntasks`. For shared memory jobs or multi-threaded applications, utilize `--cpus-per-task` effectively.
-- **`--mem` and `--mem-per-cpu`**:  Select the appropriate memory allocation strategy based on your job's requirements. Understand the default memory allocation per CPU core and utilize `--mem-per-cpu` for finer control.
-- **`--gres`**: For GPU-accelerated jobs, specify the required number of GPUs using the appropriate `gres` syntax.
-
-### Example Slurm Script for an MPI Job
-
-The following script demonstrates running an MPI job using 24 cores on a single node:
-
-```bash
-#!/bin/bash
-#SBATCH --job-name=MyMPIJob
-#SBATCH --time=24:0:0
-#SBATCH --partition=shared 
-#SBATCH --nodes=1 
-#SBATCH --ntasks-per-node=24 
-#SBATCH --mail-type=end
-#SBATCH --mail-user=your_email@example.com
-
-# Load required modules
-module list
-
-# Execute the MPI code
-mpiexec ./my_mpi_code.x > output.log
-
-echo "Completed job $SLURM_JOBID"
-```
-
-**Explanation:**
-
-1. **Resource Requests:**  Requests 24 cores on a single node from the "shared" partition with a 24-hour time limit.
-
-1. **Environment Setup:** `module list` displays the currently loaded modules. You may need to load specific modules before running your code, for example:
-
-   ```bash
-   module load intel intel-mpi
-   ```
-
-1. **Job Steps:** `mpiexec` launches the MPI program (`my_mpi_code.x`) using the requested 24 cores. The output is redirected to `output.log`.
-
-This script provides a foundation for running MPI jobs. Customize the script based on your application's requirements and select the appropriate partition and resources. Additional examples follow in the next section.
-
+(practical-examples)=
 ## Practical Slurm Script Examples
 
 The following Slurm script examples illustrate common job submission patterns on Rockfish.
@@ -502,15 +431,7 @@ date  # Display the current date and time
 
 **Explanation:**
 
-- **Shebang:**  The `#!/bin/bash -l` line specifies that the script should be executed using the Bash shell in login mode.
-- **Job Name:**  The  `--job-name`  flag sets the job name to "BasicJob".
-- **Output and Error Files:** The `--output` and `--error` flags define output files for standard output and error messages. The `%j`  placeholder is replaced by the Slurm job ID.
-- **Partition:** The `--partition` flag requests the "shared" partition.
-- **Time Limit:**  The `--time` flag sets a wall time limit of 1 hour for the job.
-- **Resource Allocation:**  The  `--nodes`  and  `--ntasks-per-node`  flags request 1 node with 8 tasks per node.
-- **Email Notifications:**  The  `--mail-type`  and  `--mail-user`  flags request an email notification upon job completion to the specified email address.
-- **Module Loading:** This section loads the Intel compiler module.
-- **Job Commands:** The script then runs basic commands, printing a message, the compute node's hostname, and the current date and time.
+This script requests 1 node with 8 tasks on the `shared` partition for 1 hour (see [](#slurm-flags) for flag details). The `%j` placeholder in the output filenames is replaced by the Slurm job ID. After loading the Intel compiler module, the script prints a message, the compute node's hostname, and the current date.
 
 ### Running a Matlab Job Array with Multiple Tasks
 
@@ -828,9 +749,7 @@ The following best practices help optimize job submission and resource utilizati
 
 #### Memory Management
 
-- For the parallel queue, each standard compute node has 48 cores and roughly 4 GB of memory per core.
-- Job memory is determined by the number of tasks (`--ntasks-per-node`, "n"). If "n" is 1, the job has a maximum of 4 GB of memory.
-- Requesting more cores increases the available memory. For a serial job needing more than 4 GB, requesting 2 cores will double the memory.
+- Memory per job is determined by the number of cores requested (see [](#memory)). For a serial job needing more than 4 GB, requesting additional cores increases the available memory proportionally.
 
 #### Checking Job Performance
 
@@ -841,9 +760,7 @@ The following best practices help optimize job submission and resource utilizati
 
 #### GPU Job Tips
 
-- For the `a100` partition, each GPU is mapped to 12 cores (48 cores / 4 GPUs), with approximately 4 GB of memory per core.
-- Do not request more cores than needed for the GPUs. Requesting extra cores will assign more GPUs, potentially wasting resources.
-- Similar guidelines apply to the `ica100` partition, where each GPU is mapped to 16 cores (64 cores / 4 GPUs) and each GPU has 80 GB of memory.
+- Do not request more cores than needed for the GPUs. Requesting extra cores will assign additional GPUs, potentially wasting resources. See [](#compute-nodes) for the core-to-GPU mapping on each partition.
 
 ### Guidelines for Effective Communication with Support Staff
 
