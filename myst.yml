@@ -57,7 +57,6 @@ project:
         - Supervision
         - Writing – review & editing
   github: https://github.com/llorracc/JHUSocSciComputation
-  banner: banner.jpg
   abbreviations:
     HPC: High-Performance Computing
     ARCH: Advanced Research Computing at Hopkins
@@ -81,7 +80,20 @@ project:
   numbering:
     headings: true
   toc:
-    - file: report.md
     - file: README.md
+    - file: docs/index.md
+    - title: Start here
+      children:
+        - file: docs/start-here/new-faculty.md
+    - title: Tasks
+      children:
+        - file: docs/tasks/run-large-jobs.md
+        - file: docs/tasks/work-with-sensitive-data.md
+        - file: docs/tasks/ai-for-writing-and-coding.md
+        - file: docs/tasks/software-and-subscriptions.md
+    - title: Reference
+      children:
+        - file: docs/reference/platforms.md
+        - file: docs/reference/rockfish-slurm-primer.md
 site:
   template: article-theme

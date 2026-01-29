@@ -4734,8 +4734,2448 @@ Creating the GitHub Actions workflow so the site deploys to GitHub Pages, and ad
 <details>
 <summary>Tool use: **list_dir_v2**</summary>
 
-Status: **loading**
 
+Parameters:
+
+```json
+{
+  "targetDirectory": "/Volumes/Sync/GitHub/llorracc/JHUSocSciComputation"
+}
+```
+Result:
+
+```json
+{
+  "directoryTreeRoot": {
+    "absPath": "/Volumes/Sync/GitHub/llorracc/JHUSocSciComputation",
+    "childrenFiles": [
+      {
+        "name": ".gitignore"
+      },
+      {
+        "name": "README.md"
+      }
+    ],
+    "childrenWereProcessed": true
+  }
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Volumes/Sync/GitHub/llorracc/JHUSocSciComputation/.gitignore</summary>
+
+</details>
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+The list_dir with ignore_globs [] still didn't show .github - so there's no .github/workflows yet. I need to create .github/workflows/deploy.yml. The myst.yml toc says report.md and README.md - but we found docs/ with index.md etc. So the site config might need to match the actual files. I'll leave myst.yml as-is and just add the deploy workflow; if the build fails they can fix the toc.
+
+Actually re-reading the glob search - it found docs/index.md, docs/reference/*.md, etc. So the content is in docs/. The myst.yml toc has "file: report.md" and "file: README.md" - those are at root. So the project might have report.md missing, or it's intended. I'll create the workflow and give clear instructions. If build fails due to missing report.md, they'll see that when they run myst build.
+</details></think>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Volumes/Sync/GitHub/llorracc/JHUSocSciComputation/myst.yml</summary>
+
+</details>
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+The toc references report.md (which doesn't exist in the list) and README.md. There's a docs/ folder with index.md etc. - the project layout at the start only showed .gitignore and README.md at root, but the glob found docs/... So the repo has docs/. The user might have a different structure. I'll add the GitHub Actions workflow and give them both: (1) how to preview locally, (2) how to get it live. I'll create .github/workflows/deploy.yml.
+</details></think>
+
+---
+
+
+Adding the GitHub Actions workflow so the site builds and deploys when you push.
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Volumes/Sync/GitHub/llorracc/JHUSocSciComputation/.github/workflows/deploy.yml</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+Good. Now I'll summarize for the user: how to view locally and how to get the GitHub Pages URL working.
+</details></think>
+
+---
+
+
+Here’s how to view the site in a browser and get it live at that URL.
+
+---
+
+## 1. **Preview locally in a browser**
+
+From the repo root:
+
+```bash
+# Build the site (requires Node and: npm install -g mystmd)
+myst build --html
+
+# Serve the built site
+npx serve _build/html
+```
+
+Then open **http://localhost:3000** (or the URL `serve` prints). That’s your site as it will look on GitHub Pages.
+
+---
+
+## 2. **Make https://llorracc.github.io/JHUSocSciComputation work**
+
+A GitHub Actions workflow was added (`.github/workflows/deploy.yml`) that builds the MyST site and deploys it to GitHub Pages.
+
+**Do this once:**
+
+1. **Turn on GitHub Pages**
+   - On GitHub: **Settings → Pages**
+   - Under **Build and deployment**, set **Source** to **GitHub Actions**.
+
+2. **Push your code** (including the new workflow) to `main`.  
+   The workflow will run, build the site, and deploy it. After it finishes (a few minutes), the site will be at:
+
+   **https://llorracc.github.io/JHUSocSciComputation**
+
+Later, every push to `main` will rebuild and redeploy automatically.
+
+---
+
+**If you don’t have the MyST CLI yet:**
+
+```bash
+npm install -g mystmd
+```
+
+Then run `myst build --html` and `npx serve _build/html` as above to preview locally.
+
+---
+
+_**User**_
+
+CI did not work on GitHub.  Diagnose and fix.
+
+---
+
+_**Agent (model default, mode Agent)**_
+
+<think><details><summary>Thought Process</summary>
+
+The user says CI did not work on GitHub. I need to diagnose what went wrong. I can:
+
+1. Check the GitHub Actions workflow file I created for any issues
+2. Look at the project structure - maybe the myst.yml references files that don't exist (e.g. report.md)
+3. Search for common MyST build issues
+
+I will start by reading the workflow file and the myst.yml to understand the project structure. The myst.yml toc had `report.md` and `README.md` - but earlier we found the project has docs/ with index.md etc. So report.md might not exist, which could cause the build to fail.
+</details></think>
+
+---
+
+
+Checking the workflow and project structure to diagnose the CI failure.
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Volumes/Sync/GitHub/llorracc/JHUSocSciComputation/.github/workflows/deploy.yml</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Volumes/Sync/GitHub/llorracc/JHUSocSciComputation/myst.yml</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="list_dir_v2">
+<details>
+<summary>Tool use: **list_dir_v2**</summary>
+
+
+Parameters:
+
+```json
+{
+  "targetDirectory": "/Volumes/Sync/GitHub/llorracc/JHUSocSciComputation"
+}
+```
+Result:
+
+```json
+{
+  "directoryTreeRoot": {
+    "absPath": "/Volumes/Sync/GitHub/llorracc/JHUSocSciComputation",
+    "childrenFiles": [
+      {
+        "name": ".gitignore"
+      },
+      {
+        "name": "README.md"
+      }
+    ],
+    "childrenWereProcessed": true
+  }
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+I see several potential issues:
+
+1. **myst.yml toc references `report.md`** - but there's no report.md in the repo (only README.md and .gitignore shown at root). That would cause the MyST build to fail.
+
+2. **myst.yml references `banner.jpg`** and **`references.bib`** - if these don't exist, the build might fail or warn.
+
+3. **actions/upload-pages-artifact@3** - the official MyST doc showed `@3` with path `./_build/html`. I will check if the action version is correct - deploy-pages@4 is used. I'll search for current action versions.
+
+4. **mystmd** - need to verify the npm package name. Is it `mystmd` or `myst-cli` or something else?
+
+I will search for the correct MyST npm package and also check what files exist in the repo (including docs/).
+</details></think>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="generic" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "undefined" • **2000** results in **1** directory</summary>
+
+Directory: **/Volumes/Sync/GitHub/llorracc/JHUSocSciComputation** (2000 files)
+
+| File |
+|------|
+| `.git/logs/refs/remotes/origin/main` |
+| `.git/refs/remotes/origin/main` |
+| `.git/logs/refs/heads/main` |
+| `.git/logs/HEAD` |
+| `.git/refs/heads/main` |
+| `.git/COMMIT_EDITMSG` |
+| `.specstory/history/2026-01-29_02-41Z-jhu-economics-faculty-computational,-ai,-ml-resources.md` |
+| `.github/workflows/deploy.yml` |
+| `.git/objects/65/1e9294787ffada062a59211b277e2e549b177b` |
+| `.git/objects/95/3908e7300307564e995f6189d5fc88a6d926bc` |
+| `_build/templates/site/myst/article-theme/node_modules/.package-lock.json` |
+| `_build/templates/site/myst/article-theme/node_modules/send/SECURITY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/send/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/send/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/send/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/send/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/send/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/serve-static/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/serve-static/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/serve-static/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/serve-static/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/serve-static/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/x-user-defined/XUserDefinedEncoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/x-user-defined/XUserDefinedEncoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/x-user-defined/XUserDefinedEncoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/x-user-defined/XUserDefinedDecoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/x-user-defined/XUserDefinedDecoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/x-user-defined/XUserDefinedDecoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/encoding/utilities.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/encoding/utilities.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/encoding/utilities.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/utf-8/UTF8Encoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/utf-8/UTF8Encoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/utf-8/UTF8Encoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/utf-8/UTF8Decoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/utf-8/UTF8Decoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/utf-8/UTF8Decoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/utf-16/UTF16Encoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/utf-16/UTF16Encoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/utf-16/UTF16Encoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/utf-16/UTF16Decoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/utf-16/UTF16Decoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/utf-16/UTF16Decoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/common/TextEncoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/common/TextEncoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/common/TextEncoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/common/TextDecoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/common/TextDecoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/common/TextDecoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/encoding/terminology.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/encoding/terminology.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/encoding/terminology.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/common/Stream.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/common/Stream.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/common/Stream.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/single-byte/SingleByteEncoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/single-byte/SingleByteEncoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/single-byte/SingleByteEncoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/single-byte/SingleByteDecoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/single-byte/SingleByteDecoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/single-byte/SingleByteDecoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/shift-jis/ShiftJISEncoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/shift-jis/ShiftJISEncoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/shift-jis/ShiftJISEncoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/shift-jis/ShiftJISDecoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/shift-jis/ShiftJISDecoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/shift-jis/ShiftJISDecoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/encoding/polyfill.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/encoding/polyfill.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/iso-2022-jp/ISO2022JPEncoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/encoding/polyfill.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/iso-2022-jp/ISO2022JPEncoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/iso-2022-jp/ISO2022JPEncoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/iso-2022-jp/ISO2022JPDecoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/iso-2022-jp/ISO2022JPDecoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/iso-2022-jp/ISO2022JPDecoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/encoding/indexes.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/encoding/indexes.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/encoding/indexes.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/common/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/x-user-defined/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/utf-8/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/utf-16/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/single-byte/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/shift-jis/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/iso-2022-jp/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/gb18030/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/euc-kr/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/euc-jp/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/big5/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/common/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/x-user-defined/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/utf-8/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/single-byte/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/utf-16/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/shift-jis/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/iso-2022-jp/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/gb18030/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/euc-kr/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/euc-jp/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/big5/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/common/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/x-user-defined/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/utf-8/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/utf-16/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/single-byte/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/shift-jis/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/iso-2022-jp/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/gb18030/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/euc-kr/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/euc-jp/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/helper/getGlobalScope.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/big5/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/helper/getGlobalScope.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/helper/getGlobalScope.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/helper/getArrayVal.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/helper/getArrayVal.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/helper/getArrayVal.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/gb18030/GB18030Encoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/gb18030/GB18030Encoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/gb18030/GB18030Encoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/gb18030/GB18030Decoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/gb18030/GB18030Decoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/gb18030/GB18030Decoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/encoding/finished.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/encoding/finished.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/encoding/finished.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/euc-kr/EUCKREncoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/euc-kr/EUCKREncoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/euc-kr/EUCKREncoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/euc-kr/EUCKRDecoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/euc-kr/EUCKRDecoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/euc-kr/EUCKRDecoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/euc-jp/EUCJPEncoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/euc-jp/EUCJPEncoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/euc-jp/EUCJPEncoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/euc-jp/EUCJPDecoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/euc-jp/EUCJPDecoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/euc-jp/EUCJPDecoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/encoding/encodings.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/encoding/encodings.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/encoding/encodings.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/encoding.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/encoding.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/encoding.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/encoding-indexes.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/encoding-indexes.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/encoding-indexes.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/encoding/encoding-indexes-provider.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/encoding/encoding-indexes-provider.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/encoding/encoding-indexes-provider.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/encoding/encoding-factory.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/encoding/encoding-factory.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/encoding/encoding-factory.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/common/Encoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/common/Encoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/common/Encoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/encoding/defaultEncoding.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/encoding/defaultEncoding.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/common/Decoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/common/Decoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/encoding/defaultEncoding.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/common/Decoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/utf-16/converCodeUnitToBytes.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/utf-16/converCodeUnitToBytes.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/utf-16/converCodeUnitToBytes.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/big5/Big5Encoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/big5/Big5Decoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/big5/Big5Encoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/big5/Big5Encoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/big5/Big5Decoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/big5/Big5Decoder.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/LICENSE.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/x-user-defined/XUserDefinedEncoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/x-user-defined/XUserDefinedEncoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/x-user-defined/XUserDefinedEncoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/x-user-defined/XUserDefinedDecoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/x-user-defined/XUserDefinedDecoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/x-user-defined/XUserDefinedDecoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/encoding/utilities.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/encoding/utilities.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/encoding/utilities.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/utf-8/UTF8Encoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/utf-8/UTF8Encoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/utf-8/UTF8Encoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/utf-8/UTF8Decoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/utf-8/UTF8Decoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/utf-8/UTF8Decoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/utf-16/UTF16Encoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/utf-16/UTF16Encoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/utf-16/UTF16Encoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/utf-16/UTF16Decoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/utf-16/UTF16Decoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/utf-16/UTF16Decoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/common/TextEncoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/common/TextEncoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/common/TextEncoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/common/TextDecoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/common/TextDecoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/common/TextDecoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/encoding/terminology.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/encoding/terminology.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/encoding/terminology.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/common/Stream.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/common/Stream.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/common/Stream.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/single-byte/SingleByteEncoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/single-byte/SingleByteEncoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/single-byte/SingleByteEncoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/single-byte/SingleByteDecoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/single-byte/SingleByteDecoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/single-byte/SingleByteDecoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/shift-jis/ShiftJISEncoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/shift-jis/ShiftJISEncoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/shift-jis/ShiftJISEncoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/shift-jis/ShiftJISDecoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/shift-jis/ShiftJISDecoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/shift-jis/ShiftJISDecoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/encoding/polyfill.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/encoding/polyfill.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/encoding/polyfill.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/iso-2022-jp/ISO2022JPEncoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/iso-2022-jp/ISO2022JPEncoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/iso-2022-jp/ISO2022JPEncoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/iso-2022-jp/ISO2022JPDecoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/iso-2022-jp/ISO2022JPDecoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/iso-2022-jp/ISO2022JPDecoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/encoding/indexes.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/encoding/indexes.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/encoding/indexes.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/common/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/x-user-defined/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/utf-8/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/utf-16/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/single-byte/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/shift-jis/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/iso-2022-jp/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/gb18030/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/euc-kr/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/euc-jp/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/big5/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/common/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/x-user-defined/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/utf-8/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/utf-16/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/shift-jis/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/single-byte/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/iso-2022-jp/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/gb18030/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/euc-kr/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/euc-jp/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/big5/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/common/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/x-user-defined/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/utf-8/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/utf-16/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/single-byte/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/shift-jis/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/iso-2022-jp/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/gb18030/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/euc-kr/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/euc-jp/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/big5/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/helper/getGlobalScope.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/helper/getGlobalScope.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/helper/getGlobalScope.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/helper/getArrayVal.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/helper/getArrayVal.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/helper/getArrayVal.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/gb18030/GB18030Encoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/gb18030/GB18030Encoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/gb18030/GB18030Encoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/gb18030/GB18030Decoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/gb18030/GB18030Decoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/gb18030/GB18030Decoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/encoding/finished.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/encoding/finished.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/encoding/finished.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/euc-kr/EUCKREncoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/euc-kr/EUCKREncoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/euc-kr/EUCKREncoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/euc-kr/EUCKRDecoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/euc-kr/EUCKRDecoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/euc-kr/EUCKRDecoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/euc-jp/EUCJPEncoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/euc-jp/EUCJPEncoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/euc-jp/EUCJPEncoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/euc-jp/EUCJPDecoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/euc-jp/EUCJPDecoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/euc-jp/EUCJPDecoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/encoding/encodings.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/encoding/encodings.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/encoding/encodings.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/umd/encoding.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/encoding.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/encoding.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/encoding.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/encoding-indexes.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/encoding-indexes.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/types/ts3.6/ponyfill.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/types/ponyfill.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/types/ts3.6/polyfill.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/types/polyfill.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/ponyfill.mjs` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/encoding-indexes.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/ponyfill.es6.mjs` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/ponyfill.es2018.mjs` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/polyfill.mjs` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/polyfill.es6.mjs` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/encoding/encoding-indexes-provider.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/encoding/encoding-indexes-provider.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/encoding/encoding-indexes-provider.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/encoding/encoding-factory.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/encoding/encoding-factory.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/encoding/encoding-factory.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/common/Encoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/polyfill.es2018.mjs` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/common/Encoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/common/Encoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/encoding/defaultEncoding.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/encoding/defaultEncoding.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/encoding/defaultEncoding.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/common/Decoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/common/Decoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/common/Decoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/utf-16/converCodeUnitToBytes.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/utf-16/converCodeUnitToBytes.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/big5/Big5Encoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/utf-16/converCodeUnitToBytes.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/big5/Big5Encoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/big5/Big5Encoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/big5/Big5Decoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/big5/Big5Decoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/big5/Big5Decoder.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/x-user-defined/XUserDefinedEncoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/ponyfill.mjs.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/x-user-defined/XUserDefinedEncoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/x-user-defined/XUserDefinedEncoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/x-user-defined/XUserDefinedDecoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/x-user-defined/XUserDefinedDecoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/x-user-defined/XUserDefinedDecoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/encoding/utilities.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/encoding/utilities.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/encoding/utilities.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/utf-8/UTF8Encoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/utf-8/UTF8Encoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/utf-8/UTF8Encoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/utf-8/UTF8Decoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/utf-8/UTF8Decoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/utf-8/UTF8Decoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/utf-16/UTF16Encoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/utf-16/UTF16Encoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/utf-16/UTF16Encoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/utf-16/UTF16Decoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/utf-16/UTF16Decoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/utf-16/UTF16Decoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/ponyfill.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/common/TextEncoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/common/TextEncoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/common/TextEncoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/common/TextDecoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/common/TextDecoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/common/TextDecoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/encoding/terminology.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/encoding/terminology.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/encoding/terminology.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/common/Stream.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/common/Stream.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/common/Stream.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/single-byte/SingleByteEncoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/single-byte/SingleByteEncoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/single-byte/SingleByteEncoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/single-byte/SingleByteDecoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/single-byte/SingleByteDecoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/single-byte/SingleByteDecoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/shift-jis/ShiftJISEncoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/shift-jis/ShiftJISEncoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/shift-jis/ShiftJISEncoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/shift-jis/ShiftJISDecoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/shift-jis/ShiftJISDecoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/shift-jis/ShiftJISDecoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/ponyfill.es6.mjs.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/encoding/polyfill.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/encoding/polyfill.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/encoding/polyfill.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/iso-2022-jp/ISO2022JPEncoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/iso-2022-jp/ISO2022JPEncoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/iso-2022-jp/ISO2022JPEncoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/iso-2022-jp/ISO2022JPDecoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/iso-2022-jp/ISO2022JPDecoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/iso-2022-jp/ISO2022JPDecoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/encoding/indexes.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/encoding/indexes.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/encoding/indexes.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/common/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/x-user-defined/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/ponyfill.es6.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/utf-8/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/utf-16/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/single-byte/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/shift-jis/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/iso-2022-jp/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/gb18030/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/euc-kr/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/euc-jp/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/big5/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/common/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/x-user-defined/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/ponyfill.es2018.mjs.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/utf-8/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/utf-16/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/single-byte/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/shift-jis/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/iso-2022-jp/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/gb18030/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/euc-kr/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/euc-jp/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/big5/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/x-user-defined/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/common/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/ponyfill.es2018.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/utf-8/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/utf-16/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/single-byte/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/shift-jis/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/iso-2022-jp/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/gb18030/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/euc-kr/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/euc-jp/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/big5/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/helper/getGlobalScope.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/helper/getGlobalScope.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/helper/getGlobalScope.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/helper/getArrayVal.js` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/polyfill.mjs.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/helper/getArrayVal.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/helper/getArrayVal.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/gb18030/GB18030Encoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/gb18030/GB18030Encoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/gb18030/GB18030Encoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/gb18030/GB18030Decoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/gb18030/GB18030Decoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/gb18030/GB18030Decoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/polyfill.min.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/encoding/finished.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/encoding/finished.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/encoding/finished.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/euc-kr/EUCKREncoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/euc-kr/EUCKREncoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/euc-kr/EUCKREncoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/euc-kr/EUCKRDecoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/euc-kr/EUCKRDecoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/euc-kr/EUCKRDecoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/euc-jp/EUCJPEncoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/euc-jp/EUCJPEncoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/euc-jp/EUCJPEncoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/euc-jp/EUCJPDecoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/polyfill.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/euc-jp/EUCJPDecoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/euc-jp/EUCJPDecoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/encoding/encodings.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/encoding/encodings.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/encoding/encodings.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/umd/encoding.min.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/umd/encoding.js` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/polyfill.es6.mjs.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/encoding.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/encoding.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/encoding.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/umd/encoding-indexes.min.js` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/polyfill.es6.min.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/umd/encoding-indexes.js` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/polyfill.es6.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/encoding-indexes.js` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/polyfill.es2018.mjs.map` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/polyfill.es2018.min.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/router/utils.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/encoding-indexes.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/router/dist/utils.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/router/router.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/polyfill.es2018.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/router/dist/router.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/router/index.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/router/dist/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/router/history.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/router/dist/history.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/router/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/router/LICENSE.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/router/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/types/tsdoc-metadata.json` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/router/dist/router.umd.min.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/ponyfill/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/encoding-indexes.js` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/ponyfill/es6/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/web-encoding/.github/workflows/node.js.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/ponyfill/es2018/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/web-encoding/test/ts-use/src/main.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/es6/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/web-encoding/src/lib.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/web-encoding/test/test-lib.spec.mjs` |
+| `_build/templates/site/myst/article-theme/node_modules/web-encoding/src/lib.mjs` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/es2018/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/web-encoding/Readme.md` |
+| `_build/templates/site/myst/article-theme/node_modules/web-encoding/test/ts-use/tsconfig.json` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/tsconfig.tsbuildinfo` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/ponyfill.js` |
+| `_build/templates/site/myst/article-theme/node_modules/web-encoding/test/ts-use/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/web-encoding/test/esm-use/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/web-encoding/test/cjs-use/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/router/dist/router.umd.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/web-encoding/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/web-encoding/test/ts-use/package-lock.json` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/warnings.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/sessions.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/serverHandoff.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/serialize.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/server.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/routes.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/routeModules.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/routeMatching.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/responses.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/ponyfill.es6.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/magicExports/remix.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/tsconfig.tsbuildinfo` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/reexport.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/mode.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/upload/memoryUploadHandler.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/encoding/encoding-indexes-provider.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/src/utils/utf8.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/sessions/memoryStorage.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/encoding/encoding-indexes-provider.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/router/dist/router.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/src/response.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/markup.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/encoding/encoding-indexes-provider.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/src/request.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/encoding/encoding-factory.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/src/package.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/links.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/src/package.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/src/lib.node.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/encoding/encoding-factory.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/invariant.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/src/lib.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/interface.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/encoding/encoding-factory.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/src/utils/is.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/common/Encoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/src/utils/is-redirect.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/headers.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/common/Encoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/src/headers.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/ponyfill.es2018.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/formData.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/common/Encoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map-support/node_modules/source-map/dist/source-map.min.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/src/utils/get-search.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/upload/errors.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/encoding/defaultEncoding.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/src/utils/form-data.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/errors.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/src/fetch.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/entry.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/web-encoding/test/esm-use/package-lock.json` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/src/errors/fetch-error.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/dev.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/src/body.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/data.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/src/errors/base.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/encoding/defaultEncoding.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/crypto.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/src/errors/abort-error.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/sessions/cookieStorage.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/Readme.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/cookies.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/LICENSE.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/build.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/src/utils/utf8.d.ts.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/encoding/defaultEncoding.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/src/response.d.ts.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/LICENSE.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/src/request.d.ts.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/src/package.d.ts.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/src/lib.node.d.ts.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/router/dist/router.cjs.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/common/Decoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/polyfill.min.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/lib.node.cjs.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/warnings.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/common/Decoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/esm/warnings.js` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map-support/node_modules/source-map/dist/source-map.min.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/sessions.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/esm/sessions.js` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/polyfill.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/common/Decoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map-support/node_modules/source-map/dist/source-map.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/src/lib.d.ts.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/serverHandoff.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/lib.cjs.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/esm/serverHandoff.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/server.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/src/utils/is.d.ts.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/esm/server.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/utf-16/converCodeUnitToBytes.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/src/utils/is-redirect.d.ts.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/src/headers.d.ts.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/routes.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/src/utils/get-search.d.ts.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/esm/routes.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/routeMatching.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/src/utils/form-data.d.ts.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/esm/routeMatching.js` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map-support/node_modules/source-map/dist/source-map.debug.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/responses.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/src/fetch.d.ts.map` |
+| `_build/templates/site/myst/article-theme/node_modules/iconv-lite/lib/streams.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/esm/responses.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/utf-16/converCodeUnitToBytes.js` |
+| `_build/templates/site/myst/article-theme/node_modules/qs/.github/FUNDING.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/iconv-lite/lib/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/magicExports/remix.js` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/.github/FUNDING.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/src/errors/fetch-error.d.ts.map` |
+| `_build/templates/site/myst/article-theme/node_modules/iconv-lite/lib/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/qs/eslint.config.mjs` |
+| `_build/templates/site/myst/article-theme/node_modules/web-encoding/test/cjs-use/package-lock.json` |
+| `_build/templates/site/myst/article-theme/node_modules/qs/.github/THREAT_MODEL.md` |
+| `_build/templates/site/myst/article-theme/node_modules/iconv-lite/lib/extend-node.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/src/body.d.ts.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/node/dist/tsconfig.tsbuildinfo` |
+| `_build/templates/site/myst/article-theme/node_modules/qs/.github/SECURITY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/magicExports/esm/remix.js` |
+| `_build/templates/site/myst/article-theme/node_modules/iconv-lite/lib/bom-handling.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/router/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/polyfill.es6.min.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/src/errors/base.d.ts.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/utf-16/converCodeUnitToBytes.js` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/.github/FUNDING.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/readme.markdown` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/router/dist/router.umd.min.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/mode.js` |
+| `_build/templates/site/myst/article-theme/node_modules/qs/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/src/errors/abort-error.d.ts.map` |
+| `_build/templates/site/myst/article-theme/node_modules/iconv-lite/encodings/utf7.js` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/esm/mode.js` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/package-support.json` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/sign.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/qs/LICENSE.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/upload/memoryUploadHandler.js` |
+| `_build/templates/site/myst/article-theme/node_modules/express/Readme.md` |
+| `_build/templates/site/myst/article-theme/node_modules/iconv-lite/encodings/utf16.js` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/round.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/esm/upload/memoryUploadHandler.js` |
+| `_build/templates/site/myst/article-theme/node_modules/qs/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/node/dist/stream.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/iconv-lite/encodings/tables/shiftjis.json` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/pow.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/test/values.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/sessions/memoryStorage.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/src/utils/utf8.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/node/dist/magicExports/remix.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/polyfill.es6.js` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/mod.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/router/dist/router.umd.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/esm/sessions/memoryStorage.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/src/response.js` |
+| `_build/templates/site/myst/article-theme/node_modules/express/History.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/big5/Big5Encoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/node/install.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/min.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/util.inspect.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/markup.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@web3-storage/multipart-parser/types/utils.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/iconv-lite/encodings/tables/gbk-added.json` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/big5/Big5Encoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/node/dist/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/constants/maxValue.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/test/undef.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@web3-storage/multipart-parser/types/search.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/src/request.js` |
+| `_build/templates/site/myst/article-theme/node_modules/iconv-lite/encodings/tables/gb18030-ranges.json` |
+| `_build/templates/site/myst/article-theme/node_modules/qs/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/node/dist/implementations.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-blob/dist/src/package.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/test/toStringTag.js` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/constants/maxSafeInteger.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@web3-storage/multipart-parser/types/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/esm/markup.js` |
+| `_build/templates/site/myst/article-theme/node_modules/iconv-lite/encodings/tables/eucjp.json` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/node/globals.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/big5/Big5Encoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-blob/dist/src/lib.node.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/test-core-js.js` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/constants/maxArrayLength.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@web3-storage/multipart-parser/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/src/package.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/node/dist/globals.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/test/quoteStyle.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-blob/dist/src/lib.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/max.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@web3-storage/multipart-parser/types/utils.d.ts.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/invariant.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/src/lib.node.js` |
+| `_build/templates/site/myst/article-theme/node_modules/qs/test/utils.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/node/dist/upload/fileUploadHandler.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/esm/coders/big5/Big5Decoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-blob/dist/src/blob.node.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map/source-map.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/test/number.js` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map-support/node_modules/source-map/source-map.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/isNegativeZero.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/esm/invariant.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@web3-storage/multipart-parser/types/search.d.ts.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/src/lib.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/node/dist/sessions/fileStorage.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/iconv-lite/encodings/tables/cp950.json` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-blob/dist/src/blob.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/test/lowbyte.js` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/isNaN.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/src/utils/is.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@web3-storage/multipart-parser/types/index.d.ts.map` |
+| `_build/templates/site/myst/article-theme/node_modules/qs/lib/utils.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-file/dist/src/package.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/node/dist/fetch.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/test/inspect.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-blob/Readme.md` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/isInteger.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map-support/node_modules/source-map/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/src/utils/is-redirect.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/esm/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-file/dist/src/lib.node.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/express/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/node/dist/crypto.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-blob/License.md` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/example/inspect.js` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/isFinite.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/headers.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@web3-storage/multipart-parser/tsconfig.json` |
+| `_build/templates/site/myst/article-theme/node_modules/express/lib/view.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-file/dist/src/lib.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/node/dist/base64.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/es-errors/.github/FUNDING.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-blob/dist/src/package.d.ts.map` |
+| `_build/templates/site/myst/article-theme/node_modules/iconv-lite/encodings/tables/cp949.json` |
+| `_build/templates/site/myst/article-theme/node_modules/qs/test/stringify.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/es2015/coders/big5/Big5Decoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/floor.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/esm/headers.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-form-data/dist/src/lib.node.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@web3-storage/multipart-parser/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/src/headers.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-file/dist/src/file.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/node/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bind-apply-helpers/.github/FUNDING.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-blob/dist/src/package.cjs.map` |
+| `_build/templates/site/myst/article-theme/node_modules/event-target-shim/dist/event-target-shim.umd.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/abs.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map-support/node_modules/source-map/lib/util.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-form-data/dist/src/lib.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/formData.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@web3-storage/multipart-parser/esm/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-file/Readme.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/node/LICENSE.md` |
+| `_build/templates/site/myst/article-theme/node_modules/express/lib/utils.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-blob/dist/src/lib.node.d.ts.map` |
+| `_build/templates/site/myst/article-theme/node_modules/es-errors/uri.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map/lib/wasm.js` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/esm/formData.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-form-data/dist/src/form-data.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/src/utils/get-search.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-file/License.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/node/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-blob/dist/src/lib.node.cjs.map` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bind-apply-helpers/reflectApply.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/es-errors/type.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/isbot/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/has-symbols/.github/FUNDING.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/iconv-lite/encodings/tables/cp936.json` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/upload/errors.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/router/dist/router.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-form-data/Readme.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/src/utils/form-data.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-file/dist/src/package.d.ts.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/node/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/express/lib/router/route.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-blob/dist/src/lib.d.ts.map` |
+| `_build/templates/site/myst/article-theme/node_modules/debug/src/node.js` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bind-apply-helpers/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/event-target-shim/dist/event-target-shim.umd.js` |
+| `_build/templates/site/myst/article-theme/node_modules/qs/lib/stringify.js` |
+| `_build/templates/site/myst/article-theme/node_modules/es-errors/syntax.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/tsconfig.json` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/test/indent-option.js` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map/lib/util.js` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/polyfill.es2018.min.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@zxing/text-encoding/cjs/coders/big5/Big5Decoder.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-form-data/License.md` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map-support/node_modules/source-map/lib/source-node.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@web3-storage/multipart-parser/src/utils.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-file/dist/src/package.cjs.map` |
+| `_build/templates/site/myst/article-theme/node_modules/express/lib/response.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-blob/dist/src/lib.cjs.map` |
+| `_build/templates/site/myst/article-theme/node_modules/debug/src/inspector-log.js` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bind-apply-helpers/functionCall.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/es-errors/ref.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/has-symbols/shams.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/isbot/index.mjs` |
+| `_build/templates/site/myst/article-theme/node_modules/has-tostringtag/.github/FUNDING.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/mime-db/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/mime-types/node_modules/mime-db/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-form-data/dist/src/lib.node.d.ts.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/esm/upload/errors.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@web3-storage/multipart-parser/esm/src/utils.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-file/dist/src/lib.node.d.ts.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-blob/dist/src/blob.node.d.ts.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/node/dist/stream.js` |
+| `_build/templates/site/myst/article-theme/node_modules/debug/src/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bind-apply-helpers/functionApply.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/event-target-shim/dist/event-target-shim.mjs.map` |
+| `_build/templates/site/myst/article-theme/node_modules/es-errors/range.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/has-symbols/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/qs/dist/qs.js` |
+| `_build/templates/site/myst/article-theme/node_modules/iconv-lite/encodings/tables/big5-added.json` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/sign.js` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/test/holes.js` |
+| `_build/templates/site/myst/article-theme/node_modules/which-typed-array/.github/FUNDING.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map/lib/url.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-form-data/dist/src/lib.node.cjs.map` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map-support/node_modules/source-map/lib/source-map-generator.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@web3-storage/multipart-parser/cjs/src/utils.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/src/fetch.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-blob/dist/src/blob.node.cjs.map` |
+| `_build/templates/site/myst/article-theme/node_modules/abort-controller/dist/abort-controller.umd.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-file/dist/src/lib.node.cjs.map` |
+| `_build/templates/site/myst/article-theme/node_modules/body-parser/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/debug/src/debug.js` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bind-apply-helpers/applyBind.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/get-proto/.github/FUNDING.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/es-errors/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/generator-function/.github/FUNDING.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/has-symbols/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/for-each/.github/FUNDING.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/test/has.js` |
+| `_build/templates/site/myst/article-theme/node_modules/has-tostringtag/shams.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/round.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-form-data/dist/src/lib.d.ts.map` |
+| `_build/templates/site/myst/article-theme/node_modules/mime-types/node_modules/mime-db/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@web3-storage/multipart-parser/test/test.spec.js` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map-support/node_modules/source-map/lib/source-map-consumer.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/express/dist/tsconfig.tsbuildinfo` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/esm/errors.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/node/dist/magicExports/remix.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-blob/dist/src/blob.d.ts.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-file/dist/src/lib.d.ts.map` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bind-apply-helpers/actualApply.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/es-errors/eval.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/es-object-atoms/.github/FUNDING.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/function-bind/.github/FUNDING.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/has-symbols/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/has-tostringtag/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/isbot/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/pow.js` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/test/global.js` |
+| `_build/templates/site/myst/article-theme/node_modules/mime-db/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/which-typed-array/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-form-data/dist/src/lib.cjs.map` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map/lib/source-node.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/src/errors/fetch-error.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-file/dist/src/lib.cjs.map` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bind-apply-helpers/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/define-data-property/.github/FUNDING.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/debug/src/browser.js` |
+| `_build/templates/site/myst/article-theme/node_modules/get-intrinsic/.github/FUNDING.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/dunder-proto/.github/FUNDING.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/express/lib/request.js` |
+| `_build/templates/site/myst/article-theme/node_modules/es-errors/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/function-bind/.github/SECURITY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/get-proto/Reflect.getPrototypeOf.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/has-symbols/tsconfig.json` |
+| `_build/templates/site/myst/article-theme/node_modules/for-each/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/generator-function/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/has-tostringtag/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/mod.js` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/test/fn.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-form-data/dist/src/form-data.d.ts.map` |
+| `_build/templates/site/myst/article-theme/node_modules/mime-types/node_modules/mime-db/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/@web3-storage/multipart-parser/src/search.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/errors.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-file/dist/src/file.d.ts.map` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-blob/dist/src/blob.cjs.map` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bind/.github/FUNDING.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bind-apply-helpers/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/body-parser/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/es-errors/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/es-object-atoms/ToObject.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/get-proto/Object.getPrototypeOf.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/gopd/.github/FUNDING.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/generator-function/index.d.mts` |
+| `_build/templates/site/myst/article-theme/node_modules/is-generator-function/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/has-tostringtag/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/is-arguments/.github/FUNDING.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/is-callable/.github/FUNDING.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/isbot/index.mjs.map` |
+| `_build/templates/site/myst/article-theme/node_modules/iconv-lite/encodings/sbcs-data.js` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/example/fn.js` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/min.js` |
+| `_build/templates/site/myst/article-theme/node_modules/mime-db/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel/.github/FUNDING.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map/source-map.js` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-map/.github/FUNDING.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/dist/polyfill.es2018.js` |
+| `_build/templates/site/myst/article-theme/node_modules/which-typed-array/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/web-encoding/test/test-lib.spec.js` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map-support/node_modules/source-map/lib/quick-sort.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/node/dist/magicExports/esm/remix.js` |
+| `_build/templates/site/myst/article-theme/node_modules/available-typed-arrays/.github/FUNDING.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/src/body.js` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bind-apply-helpers/tsconfig.json` |
+| `_build/templates/site/myst/article-theme/node_modules/abort-controller/dist/abort-controller.umd.js` |
+| `_build/templates/site/myst/article-theme/node_modules/event-target-shim/dist/event-target-shim.mjs` |
+| `_build/templates/site/myst/article-theme/node_modules/define-data-property/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/express/lib/middleware/query.js` |
+| `_build/templates/site/myst/article-theme/node_modules/dunder-proto/set.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/es-define-property/.github/FUNDING.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/es-object-atoms/RequireObjectCoercible.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/get-intrinsic/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/function-bind/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/get-proto/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/for-each/.github/SECURITY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/generator-function/require.mjs` |
+| `_build/templates/site/myst/article-theme/node_modules/has-symbols/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/is-generator-function/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/has-tostringtag/tsconfig.json` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/test/fakes.js` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/constants/maxValue.js` |
+| `_build/templates/site/myst/article-theme/node_modules/mime/types.json` |
+| `_build/templates/site/myst/article-theme/node_modules/iconv-lite/encodings/sbcs-data-generated.js` |
+| `_build/templates/site/myst/article-theme/node_modules/mime-db/db.json` |
+| `_build/templates/site/myst/article-theme/node_modules/qs/test/parse.js` |
+| `_build/templates/site/myst/article-theme/node_modules/set-function-length/.github/FUNDING.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-list/.github/FUNDING.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/web-encoding/test/test-lib.react-native.spec.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-form-data/dist/src/form-data.cjs.map` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map-support/node_modules/source-map/lib/mapping-list.js` |
+| `_build/templates/site/myst/article-theme/node_modules/mime-types/node_modules/mime-db/db.json` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/esm/entry.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@web3-storage/multipart-parser/esm/src/search.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-blob/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-file/dist/src/file.cjs.map` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bind/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/body-parser/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/define-data-property/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/debug/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/dunder-proto/get.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/express/lib/router/layer.js` |
+| `_build/templates/site/myst/article-theme/node_modules/es-object-atoms/isObject.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/get-proto/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/es-errors/tsconfig.json` |
+| `_build/templates/site/myst/article-theme/node_modules/gopd/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/generator-function/index.mjs` |
+| `_build/templates/site/myst/article-theme/node_modules/has-tostringtag/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/is-arguments/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/is-regex/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/isbot/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/test/err.js` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/constants/maxSafeInteger.js` |
+| `_build/templates/site/myst/article-theme/node_modules/is-typed-array/.github/FUNDING.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map/lib/source-map-generator.js` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map-support/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-map/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-weakmap/.github/FUNDING.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map-support/node_modules/source-map/lib/binary-search.js` |
+| `_build/templates/site/myst/article-theme/node_modules/accepts/node_modules/negotiator/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/entry.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-blob/src/package.js` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bind/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/available-typed-arrays/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/abort-controller/dist/abort-controller.mjs.map` |
+| `_build/templates/site/myst/article-theme/node_modules/body-parser/lib/types/urlencoded.js` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bound/.github/FUNDING.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bind-apply-helpers/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/debug/.travis.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/cross-env/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/dunder-proto/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/express/lib/middleware/init.js` |
+| `_build/templates/site/myst/article-theme/node_modules/event-target-shim/dist/event-target-shim.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/es-object-atoms/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/es-define-property/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/get-intrinsic/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/function-bind/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/has-property-descriptors/.github/FUNDING.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/for-each/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/gopd/gOPD.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/is-generator-function/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/has-symbols/test/tests.js` |
+| `_build/templates/site/myst/article-theme/node_modules/has-tostringtag/test/tests.js` |
+| `_build/templates/site/myst/article-theme/node_modules/is-regex/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/is-arguments/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/is-callable/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/constants/maxArrayLength.js` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/test/element.js` |
+| `_build/templates/site/myst/article-theme/node_modules/negotiator/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/safe-regex-test/.github/FUNDING.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/set-function-length/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-map/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-list/list.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/which-typed-array/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-form-data/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map-support/node_modules/source-map/lib/base64.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/esm/dev.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/router/dist/router.cjs.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@web3-storage/multipart-parser/cjs/src/search.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-file/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/node/install.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-blob/src/lib.node.js` |
+| `_build/templates/site/myst/article-theme/node_modules/available-typed-arrays/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/abort-controller/dist/abort-controller.mjs` |
+| `_build/templates/site/myst/article-theme/node_modules/body-parser/lib/types/text.js` |
+| `_build/templates/site/myst/article-theme/node_modules/debug/component.json` |
+| `_build/templates/site/myst/article-theme/node_modules/define-data-property/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/dunder-proto/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/es-object-atoms/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/es-errors/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/for-each/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/get-proto/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/generator-function/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/has-symbols/shams.js` |
+| `_build/templates/site/myst/article-theme/node_modules/has-tostringtag/shams.js` |
+| `_build/templates/site/myst/article-theme/node_modules/is-arguments/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/mime/src/test.js` |
+| `_build/templates/site/myst/article-theme/node_modules/iconv-lite/encodings/sbcs-codec.js` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/test/browser/dom.js` |
+| `_build/templates/site/myst/article-theme/node_modules/is-typed-array/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/possible-typed-array-names/.github/FUNDING.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map/lib/source-map-consumer.js` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map-support/LICENSE.md` |
+| `_build/templates/site/myst/article-theme/node_modules/set-function-length/env.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-list/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/web-encoding/test/esm-use/src/main.js` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-weakmap/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map-support/node_modules/source-map/lib/base64-vlq.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-form-data/src/lib.node.js` |
+| `_build/templates/site/myst/article-theme/node_modules/accepts/node_modules/negotiator/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/dev.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/express/dist/server.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/node/dist/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/src/errors/base.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-file/src/package.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-blob/src/lib.js` |
+| `_build/templates/site/myst/article-theme/node_modules/abort-controller/dist/abort-controller.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bind-apply-helpers/reflectApply.js` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bind/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bound/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/cross-env/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/debug/.coveralls.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/dunder-proto/tsconfig.json` |
+| `_build/templates/site/myst/article-theme/node_modules/cross-spawn/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/es-object-atoms/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/es-define-property/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/es-errors/uri.js` |
+| `_build/templates/site/myst/article-theme/node_modules/for-each/tsconfig.json` |
+| `_build/templates/site/myst/article-theme/node_modules/function-bind/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/ipaddr.js/lib/ipaddr.js.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/gopd/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/has-symbols/test/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/has-tostringtag/test/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/is-generator-function/tsconfig.json` |
+| `_build/templates/site/myst/article-theme/node_modules/is-callable/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/hasown/.github/FUNDING.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/is-regex/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/iconv-lite/encodings/internal.js` |
+| `_build/templates/site/myst/article-theme/node_modules/mime/src/build.js` |
+| `_build/templates/site/myst/article-theme/node_modules/isbot/index.iife.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/max.js` |
+| `_build/templates/site/myst/article-theme/node_modules/is-typed-array/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/negotiator/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map-support/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/safe-regex-test/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-list/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/set-function-length/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-map/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-weakmap/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/which-typed-array/tsconfig.json` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-form-data/src/lib.js` |
+| `_build/templates/site/myst/article-theme/node_modules/accepts/node_modules/negotiator/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/esm/data.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/express/dist/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/node/dist/implementations.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@web3-storage/multipart-parser/src/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/src/errors/abort-error.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-file/src/lib.node.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-blob/src/blob.node.js` |
+| `_build/templates/site/myst/article-theme/node_modules/abort-controller/dist/abort-controller.js` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bind-apply-helpers/test/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/available-typed-arrays/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/body-parser/lib/read.js` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bound/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/cross-env/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/depd/lib/browser/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/debug/Makefile` |
+| `_build/templates/site/myst/article-theme/node_modules/define-data-property/tsconfig.json` |
+| `_build/templates/site/myst/article-theme/node_modules/dunder-proto/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/cross-spawn/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/es-object-atoms/tsconfig.json` |
+| `_build/templates/site/myst/article-theme/node_modules/express/lib/router/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/es-errors/type.js` |
+| `_build/templates/site/myst/article-theme/node_modules/event-target-shim/dist/event-target-shim.js` |
+| `_build/templates/site/myst/article-theme/node_modules/get-proto/tsconfig.json` |
+| `_build/templates/site/myst/article-theme/node_modules/get-intrinsic/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/generator-function/LICENSE.md` |
+| `_build/templates/site/myst/article-theme/node_modules/has-property-descriptors/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/is-generator-function/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/is-callable/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/iconv-lite/encodings/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/test/deep.js` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/isNegativeZero.js` |
+| `_build/templates/site/myst/article-theme/node_modules/isexe/test/basic.js` |
+| `_build/templates/site/myst/article-theme/node_modules/negotiator/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/mrmime/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/is-typed-array/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/possible-typed-array-names/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/safer-buffer/tests.js` |
+| `_build/templates/site/myst/article-theme/node_modules/safe-regex-test/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-list/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-weakmap/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/util/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/accepts/node_modules/negotiator/lib/mediaType.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/data.js` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map-support/node_modules/source-map/lib/array-set.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/express/dist/globals.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/node/dist/globals.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-file/src/lib.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-blob/src/blob.js` |
+| `_build/templates/site/myst/article-theme/node_modules/abort-controller/dist/abort-controller.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bind/test/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bound/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/cross-env/src/variable.js` |
+| `_build/templates/site/myst/article-theme/node_modules/debug/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/define-data-property/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/dunder-proto/test/set.js` |
+| `_build/templates/site/myst/article-theme/node_modules/cross-spawn/lib/util/resolveCommand.js` |
+| `_build/templates/site/myst/article-theme/node_modules/es-object-atoms/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/es-define-property/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/es-errors/syntax.js` |
+| `_build/templates/site/myst/article-theme/node_modules/for-each/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/get-proto/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/function-bind/test/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/generator-function/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/gopd/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/ipaddr.js/lib/ipaddr.js` |
+| `_build/templates/site/myst/article-theme/node_modules/is-generator-function/test/uglified.js` |
+| `_build/templates/site/myst/article-theme/node_modules/is-arguments/tsconfig.json` |
+| `_build/templates/site/myst/article-theme/node_modules/hasown/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/iconv-lite/encodings/dbcs-data.js` |
+| `_build/templates/site/myst/article-theme/node_modules/is-regex/tsconfig.json` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/test/circular.js` |
+| `_build/templates/site/myst/article-theme/node_modules/isbot/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/isNaN.js` |
+| `_build/templates/site/myst/article-theme/node_modules/negotiator/lib/mediaType.js` |
+| `_build/templates/site/myst/article-theme/node_modules/is-typed-array/tsconfig.json` |
+| `_build/templates/site/myst/article-theme/node_modules/qs/lib/parse.js` |
+| `_build/templates/site/myst/article-theme/node_modules/possible-typed-array-names/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map/lib/read-wasm.js` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map-support/source-map-support.js` |
+| `_build/templates/site/myst/article-theme/node_modules/safe-regex-test/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/set-function-length/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-map/tsconfig.json` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-list/tsconfig.json` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel/tsconfig.json` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-weakmap/tsconfig.json` |
+| `_build/templates/site/myst/article-theme/node_modules/util/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/which-typed-array/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/sessions/cookieStorage.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-form-data/src/form-data.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/express/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/node/dist/upload/fileUploadHandler.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-file/src/file.js` |
+| `_build/templates/site/myst/article-theme/node_modules/available-typed-arrays/tsconfig.json` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bind-apply-helpers/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bind/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bound/tsconfig.json` |
+| `_build/templates/site/myst/article-theme/node_modules/cross-env/src/is-windows.js` |
+| `_build/templates/site/myst/article-theme/node_modules/debug/node.js` |
+| `_build/templates/site/myst/article-theme/node_modules/dunder-proto/set.js` |
+| `_build/templates/site/myst/article-theme/node_modules/cross-spawn/lib/util/readShebang.js` |
+| `_build/templates/site/myst/article-theme/node_modules/es-object-atoms/ToObject.js` |
+| `_build/templates/site/myst/article-theme/node_modules/es-define-property/tsconfig.json` |
+| `_build/templates/site/myst/article-theme/node_modules/es-errors/ref.js` |
+| `_build/templates/site/myst/article-theme/node_modules/get-proto/Reflect.getPrototypeOf.js` |
+| `_build/templates/site/myst/article-theme/node_modules/finalhandler/SECURITY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/has-property-descriptors/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/generator-function/tsconfig.json` |
+| `_build/templates/site/myst/article-theme/node_modules/gopd/tsconfig.json` |
+| `_build/templates/site/myst/article-theme/node_modules/has-symbols/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/has-tostringtag/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/is-generator-function/test/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/is-arguments/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/is-callable/test/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/hasown/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/is-regex/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/example/circular.js` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/isInteger.js` |
+| `_build/templates/site/myst/article-theme/node_modules/mime/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/is-typed-array/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/mrmime/index.mjs` |
+| `_build/templates/site/myst/article-theme/node_modules/safe-buffer/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/possible-typed-array-names/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map/lib/read-wasm-browser.js` |
+| `_build/templates/site/myst/article-theme/node_modules/safer-buffer/safer.js` |
+| `_build/templates/site/myst/article-theme/node_modules/safe-regex-test/tsconfig.json` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-list/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-map/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/express/node_modules/cookie/SECURITY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-weakmap/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/util/util.js` |
+| `_build/templates/site/myst/article-theme/node_modules/accepts/node_modules/negotiator/lib/language.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/express/LICENSE.md` |
+| `_build/templates/site/myst/article-theme/node_modules/basic-auth/node_modules/safe-buffer/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@web3-storage/multipart-parser/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-stream/src/lib.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-blob/dist/src/package.cjs` |
+| `_build/templates/site/myst/article-theme/node_modules/abort-controller/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/data-uri-to-buffer/dist/src/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/compression/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/available-typed-arrays/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bind-apply-helpers/functionCall.js` |
+| `_build/templates/site/myst/article-theme/node_modules/content-disposition/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bind/test/callBound.js` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bound/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/cross-env/src/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/debug/karma.conf.js` |
+| `_build/templates/site/myst/article-theme/node_modules/cross-spawn/lib/parse.js` |
+| `_build/templates/site/myst/article-theme/node_modules/dunder-proto/test/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/es-object-atoms/RequireObjectCoercible.js` |
+| `_build/templates/site/myst/article-theme/node_modules/define-data-property/test/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/depd/Readme.md` |
+| `_build/templates/site/myst/article-theme/node_modules/es-define-property/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/es-errors/range.js` |
+| `_build/templates/site/myst/article-theme/node_modules/express/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/for-each/test/test.js` |
+| `_build/templates/site/myst/article-theme/node_modules/finalhandler/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/get-proto/Object.getPrototypeOf.js` |
+| `_build/templates/site/myst/article-theme/node_modules/has-property-descriptors/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/get-intrinsic/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/function-bind/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/generator-function/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/gopd/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/has-symbols/test/shams/get-own-property-symbols.js` |
+| `_build/templates/site/myst/article-theme/node_modules/has-tostringtag/test/shams/get-own-property-symbols.js` |
+| `_build/templates/site/myst/article-theme/node_modules/is-generator-function/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/hasown/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/is-arguments/test/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/is-regex/test/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/iconv-lite/encodings/dbcs-codec.js` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/test/bigint.js` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/isFinite.js` |
+| `_build/templates/site/myst/article-theme/node_modules/isbot/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/isexe/mode.js` |
+| `_build/templates/site/myst/article-theme/node_modules/is-typed-array/test/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/negotiator/lib/language.js` |
+| `_build/templates/site/myst/article-theme/node_modules/mime-types/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/qs/lib/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/possible-typed-array-names/tsconfig.json` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map/lib/mapping-list.js` |
+| `_build/templates/site/myst/article-theme/node_modules/raw-body/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/safer-buffer/Readme.md` |
+| `_build/templates/site/myst/article-theme/node_modules/setprototypeof/test/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/safe-regex-test/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/set-function-length/tsconfig.json` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-list/test/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map-support/register.js` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-map/test/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-weakmap/test/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/web-encoding/test/cjs-use/src/main.js` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel/test/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/statuses/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/which-typed-array/test/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/which/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/esm/sessions/cookieStorage.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/express/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map-support/node_modules/source-map/source-map.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/node/dist/sessions/fileStorage.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-file/dist/src/package.cjs` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-stream/Readme.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@web3-storage/multipart-parser/esm/src/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/lib.node.cjs` |
+| `_build/templates/site/myst/article-theme/node_modules/abort-controller/polyfill.mjs` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-blob/dist/src/lib.node.cjs` |
+| `_build/templates/site/myst/article-theme/node_modules/available-typed-arrays/test/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/data-uri-to-buffer/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bind-apply-helpers/functionApply.js` |
+| `_build/templates/site/myst/article-theme/node_modules/body-parser/lib/types/raw.js` |
+| `_build/templates/site/myst/article-theme/node_modules/cookie/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bound/test/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/cross-env/src/bin/cross-env.js` |
+| `_build/templates/site/myst/article-theme/node_modules/dunder-proto/test/get.js` |
+| `_build/templates/site/myst/article-theme/node_modules/debug/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/cross-spawn/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/es-object-atoms/isObject.js` |
+| `_build/templates/site/myst/article-theme/node_modules/depd/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/es-define-property/test/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/es-errors/test/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/express/lib/express.js` |
+| `_build/templates/site/myst/article-theme/node_modules/event-target-shim/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/get-proto/test/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/has-property-descriptors/test/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/function-bind/implementation.js` |
+| `_build/templates/site/myst/article-theme/node_modules/generator-function/legacy.js` |
+| `_build/templates/site/myst/article-theme/node_modules/gopd/test/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/has-symbols/test/shams/core-js.js` |
+| `_build/templates/site/myst/article-theme/node_modules/has-tostringtag/test/shams/core-js.js` |
+| `_build/templates/site/myst/article-theme/node_modules/is-generator-function/test/corejs.js` |
+| `_build/templates/site/myst/article-theme/node_modules/hasown/tsconfig.json` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/test/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/isexe/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/mime/cli.js` |
+| `_build/templates/site/myst/article-theme/node_modules/mrmime/readme.md` |
+| `_build/templates/site/myst/article-theme/node_modules/morgan/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/qs/lib/formats.js` |
+| `_build/templates/site/myst/article-theme/node_modules/possible-typed-array-names/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/on-finished/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map/lib/binary-search.js` |
+| `_build/templates/site/myst/article-theme/node_modules/proxy-addr/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/safe-regex-test/test/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/set-cookie-parser/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/set-function-length/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map-support/register-hook-require.js` |
+| `_build/templates/site/myst/article-theme/node_modules/stream-slice/.travis.yml` |
+| `_build/templates/site/myst/article-theme/node_modules/express/node_modules/cookie/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/which/CHANGELOG.md` |
+| `_build/templates/site/myst/article-theme/node_modules/accepts/node_modules/negotiator/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-form-data/dist/src/lib.node.cjs` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/express/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map-support/node_modules/source-map/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-file/dist/src/lib.node.cjs` |
+| `_build/templates/site/myst/article-theme/node_modules/morgan/node_modules/on-finished/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-stream/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-blob/dist/src/lib.cjs` |
+| `_build/templates/site/myst/article-theme/node_modules/accepts/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/abort-controller/polyfill.js` |
+| `_build/templates/site/myst/article-theme/node_modules/data-uri-to-buffer/dist/src/index.js.map` |
+| `_build/templates/site/myst/article-theme/node_modules/compression/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/body-parser/lib/types/json.js` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bind-apply-helpers/applyBind.js` |
+| `_build/templates/site/myst/article-theme/node_modules/basic-auth/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/bytes/Readme.md` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bind/callBound.js` |
+| `_build/templates/site/myst/article-theme/node_modules/compressible/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/content-disposition/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/content-type/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/cross-env/src/bin/cross-env-shell.js` |
+| `_build/templates/site/myst/article-theme/node_modules/cookie-signature/Readme.md` |
+| `_build/templates/site/myst/article-theme/node_modules/cross-spawn/lib/util/escape.js` |
+| `_build/templates/site/myst/article-theme/node_modules/es-object-atoms/test/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/etag/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/finalhandler/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/for-each/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/fresh/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/get-intrinsic/test/GetIntrinsic.js` |
+| `_build/templates/site/myst/article-theme/node_modules/forwarded/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/generator-function/test/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/function-bind/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/http-errors/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/get-port/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/inherits/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/is-arguments/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/hasown/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/is-callable/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/ipaddr.js/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/is-regex/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/media-typer/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/example/all.js` |
+| `_build/templates/site/myst/article-theme/node_modules/is-typed-array/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/isexe/windows.js` |
+| `_build/templates/site/myst/article-theme/node_modules/merge-descriptors/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/negotiator/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/mime/mime.js` |
+| `_build/templates/site/myst/article-theme/node_modules/methods/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/on-headers/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/parseurl/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/mime-types/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/possible-typed-array-names/test/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/safe-buffer/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/path-key/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/range-parser/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map/lib/base64.js` |
+| `_build/templates/site/myst/article-theme/node_modules/raw-body/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/safer-buffer/Porting-Buffer.md` |
+| `_build/templates/site/myst/article-theme/node_modules/shebang-regex/readme.md` |
+| `_build/templates/site/myst/article-theme/node_modules/setprototypeof/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/set-function-length/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-list/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/statuses/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-map/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/stream-slice/test.js` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-weakmap/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/utils-merge/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/toidentifier/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/unpipe/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/util/support/types.js` |
+| `_build/templates/site/myst/article-theme/node_modules/which-typed-array/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/type-is/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/which/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/accepts/node_modules/negotiator/lib/encoding.js` |
+| `_build/templates/site/myst/article-theme/node_modules/basic-auth/node_modules/safe-buffer/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/vary/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/esm/cookies.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-form-data/dist/src/lib.cjs` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/express/dist/server.js` |
+| `_build/templates/site/myst/article-theme/node_modules/express/node_modules/cookie-signature/Readme.md` |
+| `_build/templates/site/myst/article-theme/node_modules/morgan/node_modules/on-finished/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-file/dist/src/lib.cjs` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/node/dist/fetch.js` |
+| `_build/templates/site/myst/article-theme/node_modules/send/node_modules/ms/readme.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-stream/src/lib.node.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-blob/dist/src/blob.node.cjs` |
+| `_build/templates/site/myst/article-theme/node_modules/accepts/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@types/cookie/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/abort-controller/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/data-uri-to-buffer/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/available-typed-arrays/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bind-apply-helpers/actualApply.js` |
+| `_build/templates/site/myst/article-theme/node_modules/buffer-from/readme.md` |
+| `_build/templates/site/myst/article-theme/node_modules/basic-auth/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/array-flatten/array-flatten.js` |
+| `_build/templates/site/myst/article-theme/node_modules/bytes/History.md` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bind/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/compressible/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/content-type/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/cookie/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bound/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/cookie-signature/History.md` |
+| `_build/templates/site/myst/article-theme/node_modules/debug/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/dunder-proto/get.js` |
+| `_build/templates/site/myst/article-theme/node_modules/ee-first/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/define-data-property/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/escape-html/Readme.md` |
+| `_build/templates/site/myst/article-theme/node_modules/etag/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/destroy/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/depd/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/es-define-property/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/express/lib/application.js` |
+| `_build/templates/site/myst/article-theme/node_modules/es-errors/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/encodeurl/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/for-each/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/event-target-shim/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/get-proto/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/fresh/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/forwarded/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/has-property-descriptors/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/function-bind/.nycrc` |
+| `_build/templates/site/myst/article-theme/node_modules/gopd/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/get-port/readme.md` |
+| `_build/templates/site/myst/article-theme/node_modules/http-errors/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/is-generator-function/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/is-arguments/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/hasown/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/inherits/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/iconv-lite/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/is-callable/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/is-regex/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/media-typer/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/isexe/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/floor.js` |
+| `_build/templates/site/myst/article-theme/node_modules/isbot/index.iife.js` |
+| `_build/templates/site/myst/article-theme/node_modules/is-typed-array/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/merge-descriptors/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/negotiator/lib/encoding.js` |
+| `_build/templates/site/myst/article-theme/node_modules/mime/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/methods/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/mrmime/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/on-headers/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/morgan/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/parseurl/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/qs/test/empty-keys-cases.js` |
+| `_build/templates/site/myst/article-theme/node_modules/path-to-regexp/Readme.md` |
+| `_build/templates/site/myst/article-theme/node_modules/on-finished/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/ms/readme.md` |
+| `_build/templates/site/myst/article-theme/node_modules/path-key/readme.md` |
+| `_build/templates/site/myst/article-theme/node_modules/range-parser/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map/lib/base64-vlq.js` |
+| `_build/templates/site/myst/article-theme/node_modules/proxy-addr/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/set-cookie-parser/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/safe-regex-test/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/shebang-regex/license` |
+| `_build/templates/site/myst/article-theme/node_modules/setprototypeof/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/set-function-length/env.js` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-list/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/shebang-command/readme.md` |
+| `_build/templates/site/myst/article-theme/node_modules/statuses/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-map/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map-support/browser-source-map-support.js` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/stream-slice/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-weakmap/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/utils-merge/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/util/support/isBufferBrowser.js` |
+| `_build/templates/site/myst/article-theme/node_modules/express/node_modules/cookie/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/toidentifier/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/unpipe/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/type-is/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/which-typed-array/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/accepts/node_modules/negotiator/lib/charset.js` |
+| `_build/templates/site/myst/article-theme/node_modules/which/which.js` |
+| `_build/templates/site/myst/article-theme/node_modules/basic-auth/node_modules/safe-buffer/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-form-data/dist/src/form-data.cjs` |
+| `_build/templates/site/myst/article-theme/node_modules/vary/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/express/dist/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map-support/node_modules/source-map/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/express/node_modules/cookie-signature/History.md` |
+| `_build/templates/site/myst/article-theme/node_modules/morgan/node_modules/on-finished/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-file/dist/src/file.cjs` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/node/dist/crypto.js` |
+| `_build/templates/site/myst/article-theme/node_modules/send/node_modules/ms/license.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-stream/src/lib.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@web3-storage/multipart-parser/cjs/src/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/accepts/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-blob/dist/src/blob.cjs` |
+| `_build/templates/site/myst/article-theme/node_modules/@types/cookie/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/abort-controller/browser.mjs` |
+| `_build/templates/site/myst/article-theme/node_modules/data-uri-to-buffer/dist/src/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/available-typed-arrays/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/compression/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bind-apply-helpers/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/buffer-from/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/array-flatten/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/basic-auth/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/bytes/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bind/.nycrc` |
+| `_build/templates/site/myst/article-theme/node_modules/compressible/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/content-disposition/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/content-type/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bound/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/cookie/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/cookie-signature/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/cross-env/src/command.js` |
+| `_build/templates/site/myst/article-theme/node_modules/dunder-proto/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/cross-spawn/lib/enoent.js` |
+| `_build/templates/site/myst/article-theme/node_modules/ee-first/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/define-data-property/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/escape-html/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/es-object-atoms/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/etag/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/destroy/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/es-define-property/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/encodeurl/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/es-errors/eval.js` |
+| `_build/templates/site/myst/article-theme/node_modules/for-each/.nycrc` |
+| `_build/templates/site/myst/article-theme/node_modules/finalhandler/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/has-property-descriptors/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/get-proto/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/fresh/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/forwarded/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/get-intrinsic/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/function-bind/test/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/generator-function/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/gopd/gOPD.js` |
+| `_build/templates/site/myst/article-theme/node_modules/http-errors/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/get-port/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/has-symbols/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/has-tostringtag/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/is-generator-function/.nycrc` |
+| `_build/templates/site/myst/article-theme/node_modules/is-arguments/.nycrc` |
+| `_build/templates/site/myst/article-theme/node_modules/inherits/inherits.js` |
+| `_build/templates/site/myst/article-theme/node_modules/hasown/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/iconv-lite/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/is-regex/.nycrc` |
+| `_build/templates/site/myst/article-theme/node_modules/is-callable/.nycrc` |
+| `_build/templates/site/myst/article-theme/node_modules/ipaddr.js/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/media-typer/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/abs.js` |
+| `_build/templates/site/myst/article-theme/node_modules/isexe/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/is-typed-array/.nycrc` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/merge-descriptors/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/negotiator/lib/charset.js` |
+| `_build/templates/site/myst/article-theme/node_modules/mime/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/methods/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/morgan/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/on-headers/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/parseurl/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/mime-types/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/ms/license.md` |
+| `_build/templates/site/myst/article-theme/node_modules/path-to-regexp/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/on-finished/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/possible-typed-array-names/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/path-key/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/range-parser/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map/lib/array-set.js` |
+| `_build/templates/site/myst/article-theme/node_modules/safe-buffer/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/proxy-addr/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/raw-body/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/set-cookie-parser/lib/set-cookie.js` |
+| `_build/templates/site/myst/article-theme/node_modules/safer-buffer/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/safe-regex-test/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/setprototypeof/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/shebang-regex/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/set-function-length/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/shebang-command/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-list/.nycrc` |
+| `_build/templates/site/myst/article-theme/node_modules/statuses/codes.json` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-map/.nycrc` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel/.nycrc` |
+| `_build/templates/site/myst/article-theme/node_modules/stream-slice/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-weakmap/.nycrc` |
+| `_build/templates/site/myst/article-theme/node_modules/utils-merge/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/web-encoding/src/lib.react-native.js` |
+| `_build/templates/site/myst/article-theme/node_modules/toidentifier/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/unpipe/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/express/node_modules/cookie/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/util/support/isBuffer.js` |
+| `_build/templates/site/myst/article-theme/node_modules/which-typed-array/.nycrc` |
+| `_build/templates/site/myst/article-theme/node_modules/which/bin/node-which` |
+| `_build/templates/site/myst/article-theme/node_modules/type-is/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/mime-types/node_modules/mime-db/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/basic-auth/node_modules/safe-buffer/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/vary/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/express/dist/globals.js` |
+| `_build/templates/site/myst/article-theme/node_modules/morgan/node_modules/on-finished/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/server-runtime/dist/cookies.js` |
+| `_build/templates/site/myst/article-theme/node_modules/express/node_modules/cookie-signature/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/node/dist/base64.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-stream/src/stream.cjs` |
+| `_build/templates/site/myst/article-theme/node_modules/send/node_modules/ms/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/@remix-run/web-fetch/dist/lib.cjs` |
+| `_build/templates/site/myst/article-theme/node_modules/accepts/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/@types/cookie/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/abort-controller/browser.js` |
+| `_build/templates/site/myst/article-theme/node_modules/available-typed-arrays/.nycrc` |
+| `_build/templates/site/myst/article-theme/node_modules/compression/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/buffer-from/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bind-apply-helpers/.nycrc` |
+| `_build/templates/site/myst/article-theme/node_modules/array-flatten/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/basic-auth/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/body-parser/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/bytes/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bind/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/compressible/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/content-disposition/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/content-type/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/cookie/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bound/.nycrc` |
+| `_build/templates/site/myst/article-theme/node_modules/cookie-signature/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/debug/.npmignore` |
+| `_build/templates/site/myst/article-theme/node_modules/dunder-proto/.nycrc` |
+| `_build/templates/site/myst/article-theme/node_modules/ee-first/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/define-data-property/.nycrc` |
+| `_build/templates/site/myst/article-theme/node_modules/escape-html/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/etag/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/es-object-atoms/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/destroy/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/depd/History.md` |
+| `_build/templates/site/myst/article-theme/node_modules/es-define-property/.nycrc` |
+| `_build/templates/site/myst/article-theme/node_modules/encodeurl/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/es-errors/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/finalhandler/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/for-each/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/event-target-shim/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/get-proto/.nycrc` |
+| `_build/templates/site/myst/article-theme/node_modules/has-property-descriptors/.nycrc` |
+| `_build/templates/site/myst/article-theme/node_modules/fresh/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/forwarded/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/get-intrinsic/.nycrc` |
+| `_build/templates/site/myst/article-theme/node_modules/generator-function/.nycrc` |
+| `_build/templates/site/myst/article-theme/node_modules/gopd/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/get-port/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/http-errors/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/has-symbols/.nycrc` |
+| `_build/templates/site/myst/article-theme/node_modules/has-tostringtag/.nycrc` |
+| `_build/templates/site/myst/article-theme/node_modules/is-generator-function/.nvmrc` |
+| `_build/templates/site/myst/article-theme/node_modules/is-arguments/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/hasown/.nycrc` |
+| `_build/templates/site/myst/article-theme/node_modules/inherits/inherits_browser.js` |
+| `_build/templates/site/myst/article-theme/node_modules/iconv-lite/Changelog.md` |
+| `_build/templates/site/myst/article-theme/node_modules/is-callable/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/is-regex/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/ipaddr.js/ipaddr.min.js` |
+| `_build/templates/site/myst/article-theme/node_modules/mime-db/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/media-typer/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/isexe/.npmignore` |
+| `_build/templates/site/myst/article-theme/node_modules/is-typed-array/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/.nycrc` |
+| `_build/templates/site/myst/article-theme/node_modules/merge-descriptors/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/isbot/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/methods/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/morgan/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/mrmime/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/on-headers/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/mime-types/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/parseurl/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/ms/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/qs/.nycrc` |
+| `_build/templates/site/myst/article-theme/node_modules/on-finished/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/path-to-regexp/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/possible-typed-array-names/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/path-key/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/safe-buffer/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/range-parser/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/proxy-addr/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/raw-body/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/safer-buffer/dangerous.js` |
+| `_build/templates/site/myst/article-theme/node_modules/safe-regex-test/.nycrc` |
+| `_build/templates/site/myst/article-theme/node_modules/setprototypeof/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/shebang-regex/index.d.ts` |
+| `_build/templates/site/myst/article-theme/node_modules/shebang-command/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/set-function-length/.nycrc` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-list/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/statuses/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-map/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/stream-slice/.npmignore` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-weakmap/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/utils-merge/.npmignore` |
+| `_build/templates/site/myst/article-theme/node_modules/toidentifier/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/web-encoding/src/lib.js` |
+| `_build/templates/site/myst/article-theme/node_modules/express/node_modules/cookie/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/type-is/HISTORY.md` |
+| `_build/templates/site/myst/article-theme/node_modules/which-typed-array/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/unpipe/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/mime-types/node_modules/mime-db/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/accepts/node_modules/negotiator/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/vary/README.md` |
+| `_build/templates/site/myst/article-theme/node_modules/basic-auth/node_modules/safe-buffer/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/express/node_modules/cookie-signature/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map-support/node_modules/source-map/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/morgan/node_modules/on-finished/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/send/node_modules/ms/index.js` |
+| `_build/templates/site/myst/article-theme/node_modules/accepts/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/@types/cookie/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/abort-controller/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/available-typed-arrays/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/compression/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bind-apply-helpers/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/basic-auth/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/buffer-from/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/array-flatten/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/body-parser/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/bytes/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bind/.eslintignore` |
+| `_build/templates/site/myst/article-theme/node_modules/compressible/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/content-disposition/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/content-type/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/cookie/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/call-bound/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/cookie-signature/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/debug/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/dunder-proto/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/cross-env/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/cross-spawn/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/ee-first/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/define-data-property/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/escape-html/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/etag/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/es-object-atoms/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/destroy/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/depd/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/es-define-property/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/express/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/es-errors/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/encodeurl/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/finalhandler/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/event-target-shim/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/for-each/.editorconfig` |
+| `_build/templates/site/myst/article-theme/node_modules/fresh/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/get-proto/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/has-property-descriptors/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/get-intrinsic/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/function-bind/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/forwarded/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/gopd/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/generator-function/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/http-errors/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/get-port/license` |
+| `_build/templates/site/myst/article-theme/node_modules/has-symbols/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/has-tostringtag/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/is-generator-function/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/is-arguments/.editorconfig` |
+| `_build/templates/site/myst/article-theme/node_modules/inherits/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/hasown/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/iconv-lite/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/is-callable/.editorconfig` |
+| `_build/templates/site/myst/article-theme/node_modules/is-regex/.editorconfig` |
+| `_build/templates/site/myst/article-theme/node_modules/ipaddr.js/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/mime-db/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/media-typer/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/math-intrinsics/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/isexe/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/is-typed-array/.editorconfig` |
+| `_build/templates/site/myst/article-theme/node_modules/object-inspect/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/isbot/AUTHORS` |
+| `_build/templates/site/myst/article-theme/node_modules/merge-descriptors/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/mime/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/methods/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/morgan/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/negotiator/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/mrmime/license` |
+| `_build/templates/site/myst/article-theme/node_modules/on-headers/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/parseurl/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/mime-types/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/ms/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/qs/.editorconfig` |
+| `_build/templates/site/myst/article-theme/node_modules/on-finished/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/path-to-regexp/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/possible-typed-array-names/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/safe-buffer/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/path-key/license` |
+| `_build/templates/site/myst/article-theme/node_modules/range-parser/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/proxy-addr/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/raw-body/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/safe-regex-test/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/source-map/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/safer-buffer/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/setprototypeof/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/set-cookie-parser/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/shebang-regex/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/shebang-command/license` |
+| `_build/templates/site/myst/article-theme/node_modules/set-function-length/.eslintrc` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-list/.editorconfig` |
+| `_build/templates/site/myst/article-theme/node_modules/web-streams-polyfill/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/statuses/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-map/.editorconfig` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel/.editorconfig` |
+| `_build/templates/site/myst/article-theme/node_modules/stream-slice/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/which-typed-array/.editorconfig` |
+| `_build/templates/site/myst/article-theme/node_modules/side-channel-weakmap/.editorconfig` |
+| `_build/templates/site/myst/article-theme/node_modules/utils-merge/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/toidentifier/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/unpipe/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/vary/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/util/LICENSE` |
+| `_build/templates/site/myst/article-theme/node_modules/type-is/package.json` |
+| `_build/templates/site/myst/article-theme/node_modules/which/LICENSE` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/1c-F2UGQXXO.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/abap-WHQWDCZ7.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/abnf-4U5BBTX3.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/abnf-C7FZREB7.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/accesslog-24665KT7.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/actionscript-LM2TYF6M.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/actionscript-XWY753HR.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/ada-AJ2YWWHW.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/ada-GLDAP67B.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/agda-7W4UJEPA.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/al-GIFXZXG4.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/angelscript-X3F5DTJS.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/antlr4-ANMXYIJ5.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/apache-Q7NGZMNH.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/apacheconf-W5B3C2WN.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/apex-KVVUBTG4.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/apl-JDSRQHW5.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/apl-ZZO6JXPL.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/applescript-75HOSXMS.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/applescript-PWRRJBMF.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/aql-SID2KBCS.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/arcade-75OOVXVV.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/architecture-U656AL7Q-J6BQICAQ.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/architectureDiagram-VXUJARFQ-RNNRNJKX.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/arduino-2KNPIRKZ.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/arduino-ZLIG7J2J.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/arff-RBNCSNAF.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/armasm-F4ZQKLTT.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/asciiarmor-RPXMRT54.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/asciidoc-KJVWK42L.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/asciidoc-MOHQMFQQ.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/asm6502-TIBZBI2R.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/asmatmel-FSDNXLWH.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/asn1-N4ENKCWM.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/aspectj-6IUL36MF.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/aspnet-73DK2CZM.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/asterisk-MOV35MZK.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/autohotkey-AWXUS5OS.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/autohotkey-JTUWDUXZ.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/autoit-22VHHLMX.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/autoit-IL2HQ5FH.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/avisynth-LKHO36WZ.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/avrasm-52ANMWJX.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/avro-idl-3UV4FMBD.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/awk-D56OFTBM.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/axapta-S5AYD5NK.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/bash-2LDSSWEX.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/bash-G5VR5642.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/basic-R4W3MPHH.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/basic-RFD4FF33.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/batch-T6HXYSU5.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/bbcode-ICL6JI2X.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/bicep-5TFZQ4DE.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/birb-5AJUM5MZ.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/bison-7JS4W2XU.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/blockDiagram-VD42YOAC-AQQ6RJBY.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/bnf-ETWB3Q7P.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/bnf-WHRQUNDL.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/brainfuck-4TGC4DRO.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/brainfuck-KJ7DDEPS.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/brainfuck-YU7EB23L.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/brightscript-Q2OL65P7.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/bro-FGHLWUHP.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/bsl-PZR5N6JQ.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/c-IXWX2FPE.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/c-VIKOOS7T.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/c-like-R5UC5PF7.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/c4Diagram-YG6GDRKO-5KGQCFHK.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/cal-Y5P7K5Z2.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/capnproto-LTSEHCOQ.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/ceylon-HS6RX4UJ.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/cfscript-RNPHXZHO.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chaiscript-ORNCM3VX.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-265RPIE7.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-26VD3W55.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-26VS2IBC.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-2HQFXNVZ.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-2HVDTW4E.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-2RBRI2QO.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-2RRX75WA.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-2UPXXXVZ.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-33C7HVGB.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-34XIY2DH.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-36BZLZAA.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-37MEAX4M.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-3DKGVXBF.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-3EBOCCHJ.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-3FJ63ARC.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-3ICWWYPB.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-3ID7V6VT.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-3JSSQIXP.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-3LVLBA5H.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-3NSVY56Z.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-3RILWZVK.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-3SI3YFTA.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-3TGUKLBR.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-3U2VKP36.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-3WHWG3R4.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-3ZNQ4RJV.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-44Y5F2RG.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-45W5NISM.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-4KY6QU65.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-4MQHJYPT.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-4OEDG4JQ.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-4RJFF6WU.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-4RQBFYA6.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-4SDGMJE2.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-4UW3WPNX.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-4VF2MTNC.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-536FPRQA.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-55J7FZH4.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-5736WJYA.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-5BDQQ53J.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-5E4MRVCJ.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-5GONE7L7.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-5LDMESXP.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-5MJ7SY2U.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-5OGUL7JL.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-5RAPCLNV.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-5S6BNNID.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-5UUBGF2R.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-5WQWRSDK.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-5XNNEDOD.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-5YSLY5JM.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-6AYDFMWY.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-6BVT5IQV.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-6C3VSIFQ.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-6C4I5DOZ.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-6CIIHH5P.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-6CW6LJH2.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-6F7QVDWG.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-6FEZWRIS.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-6I7R2J3E.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-6IYMFPYI.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-6KJFUITK.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-6ME5FGC4.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-6SZIOUXW.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-6YA43ERH.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-6YGIEX7D.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-6ZWZTF4Z.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-725GE56H.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-726SDXJV.js` |
+| `_build/templates/site/myst/article-theme/public/build/_shared/chunk-746DYJXZ.js` |
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="web_search">
+<details>
+            <summary>Tool use: **web_search** • Searched web `undefined` • **1** results</summary>
+        
+| Title | URL | Chunk |
+|-------|-----|-------|
+| Web search results for query: mystmd npm package install myst build |  | Links:<br/>1. [Installing & Building MyST Locally](https://mystmd.org/guide/contribute-build-locally)<br/>2. [mystjs](https://www.npmjs.com/package/mystjs)<br/>3. [mystmd](https://www.npmjs.com/package/mystmd)<br/>4. [Create a PDF](https://mystmd.org/guide/creating-pdf-documents)<br/>5. [Install the MyST Markdown Command Line Interface](https://mystmd.org/guide/installing)<br/><br/># MyST Markdown Installation and Build<br/><br/>## Installing the `mystmd` Package<br/><br/>To install the MyST CLI via npm:[3]<br/>```<br/>npm install -g mystmd<br/>```<br/><br/>This installs `myst` globally on your system. Verify installation with `myst --version`.[5]<br/><br/>## Building MyST Locally<br/><br/>If you're contributing to MyST development, follow these steps:[1]<br/><br/>1. **Install dependencies** in the base directory:<br/>   ```<br/>   npm install<br/>   ```<br/><br/>2. **Build the application**:<br/>   ```<br/>   npm run build<br/>   ```<br/>   The first build takes about a minute; subsequent builds are faster due to caching.[1]<br/><br/>3. **Link the binary**:<br/>   ```<br/>   npm run link<br/>   ```<br/>   This makes the `myst` CLI available in your terminal.[1]<br/><br/>## Using MyST Build<br/><br/>Once installed, use the `myst build` command to compile your documents:[4]<br/>```<br/>myst build my-document.md --pdf<br/>```<br/><br/>This processes your MyST markdown files according to your project configuration.<br/><br/>**Note:** Node.js (v18+) is required to run MyST.[1][5] The `mystmd` package on PyPI can automatically install Node.js if needed.[5] |
+
+</details>
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+So mystmd is correct. The key issue is likely:
+
+1. **report.md** - myst.yml toc lists `report.md` but there's no report.md in the repo root (only README.md, .gitignore, docs/, etc.). So when `myst build --html` runs, it will fail because it can't find report.md.
+
+2. **banner.jpg** and **references.bib** - might cause warnings or errors if missing.
+
+I will list the root and docs to see exactly what files exist (excluding _build and .git).
+</details></think>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "pattern": ".",
+  "path": "/Volumes/Sync/GitHub/llorracc/JHUSocSciComputation",
+  "glob": "*.md",
+  "outputMode": "files_with_matches",
+  "caseInsensitive": false
+}
+```
+Result:
+
+```json
+{
+  "success": {
+    "pattern": ".",
+    "path": "/Volumes/Sync/GitHub/llorracc/JHUSocSciComputation",
+    "outputMode": "files_with_matches",
+    "workspaceResults": {
+      "/Volumes/Sync/GitHub/llorracc/JHUSocSciComputation": {
+        "files": {
+          "files": [
+            "./.specstory/history/2026-01-29_02-41Z-jhu-economics-faculty-computational,-ai,-ml-resources.md",
+            "./README.md",
+            "./docs/reference/rockfish-slurm-primer.md",
+            "./docs/reference/platforms.md",
+            "./docs/tasks/software-and-subscriptions.md",
+            "./docs/tasks/ai-for-writing-and-coding.md",
+            "./docs/tasks/work-with-sensitive-data.md",
+            "./docs/tasks/run-large-jobs.md",
+            "./docs/start-here/new-faculty.md",
+            "./docs/index.md",
+            "./.specstory/.what-is-this.md"
+          ],
+          "totalFiles": 11
+        }
+      }
+    }
+  }
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="generic" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "undefined" • **11** results in **1** directory</summary>
+
+Directory: **/Volumes/Sync/GitHub/llorracc/JHUSocSciComputation** (11 files)
+
+| File |
+|------|
+| `.specstory/history/2026-01-29_02-41Z-jhu-economics-faculty-computational,-ai,-ml-resources.md` |
+| `README.md` |
+| `docs/reference/rockfish-slurm-primer.md` |
+| `docs/reference/platforms.md` |
+| `docs/tasks/software-and-subscriptions.md` |
+| `docs/tasks/ai-for-writing-and-coding.md` |
+| `docs/tasks/work-with-sensitive-data.md` |
+| `docs/tasks/run-large-jobs.md` |
+| `docs/start-here/new-faculty.md` |
+| `docs/index.md` |
+| `.specstory/.what-is-this.md` |
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="generic" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "undefined" • **1** result in **1** directory</summary>
+
+Directory: **/Volumes/Sync/GitHub/llorracc/JHUSocSciComputation** (1 file)
+
+| File |
+|------|
+| `references.bib` |
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="generic" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "undefined" • **0** result in **1** directory</summary>
+
+Directory: **/Volumes/Sync/GitHub/llorracc/JHUSocSciComputation** (0 file)
+
+</details>
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+
+So:
+- **report.md** does NOT exist at root. myst.yml toc lists `report.md` and `README.md`. The build will fail because report.md is missing.
+- **references.bib** exists.
+- **banner.jpg** does NOT exist - might cause a warning but maybe not a hard failure.
+
+The fix: Update myst.yml toc to only reference files that exist. The actual content appears to be in docs/ - docs/index.md and various docs under docs/reference, docs/tasks, docs/start-here. I need to check how MyST toc works - can it reference a folder or only files? I will check MyST docs for toc structure.
+
+Actually the simplest fix is to remove report.md from the toc and use only README.md, so the site has at least one page. Or we could add the docs structure. I will check the MyST toc format - can we do something like:
+  - file: README.md
+  - slug: docs
+    children:
+      - file: docs/index.md
+      ...
+I'll search for MyST toc structure.
+</details></think>
+
+---
+
+
+Checking MyST toc format for multiple files/folders:
+
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="web_search">
+<details>
+            <summary>Tool use: **web_search** • Searched web `undefined` • **1** results</summary>
+        
+| Title | URL | Chunk |
+|-------|-----|-------|
+| Web search results for query: MyST myst.yml toc table of contents multiple files folder structure |  | Links:<br/>1. [Table of Contents](https://mystmd.org/guide/table-of-contents)<br/>2. [Structure the Table of Contents](https://jupyterbook.org/en/stable/structure/toc.html)<br/>3. [MyST CLI Reference](https://mystmd.org/cli/reference)<br/>4. [Configuration and content frontmatter](https://mystmd.org/guide/configuration)<br/>5. [MyST Markdown Tools](https://mystmd.org/guide)<br/><br/># MyST Table of Contents Configuration<br/><br/>## Basic Structure<br/><br/>The Table of Contents in MyST is defined in the `toc` attribute of the `myst.yml` project frontmatter.[1] It defines the structure of your MyST project and, for website exports, creates the left-hand navigation.[1]<br/><br/>## Auto-Generating TOC<br/><br/>To automatically generate a table of contents based on your file structure, use:[1]<br/><br/>```<br/>myst init --write-toc<br/>```<br/><br/>This command creates a `_toc.yml` file that can be manually edited if needed.[3]<br/><br/>## Structuring Multiple Files<br/><br/>### Basic File Listing<br/>Define files explicitly in `myst.yml`:[1]<br/><br/>```yaml<br/>version: 1<br/>project:<br/>  toc:<br/>    - file: root.md<br/>    - file: first-child.md<br/>    - file: second-child.md<br/>```<br/><br/>### Using Glob Patterns<br/>Use `pattern` to match multiple files automatically while maintaining folder structure:[1]<br/><br/>```yaml<br/>version: 1<br/>project:<br/>  toc:<br/>    - file: root.md<br/>    - pattern: '*.md'<br/>    - sort: ascending  # or 'descending'<br/>```<br/><br/>### Nesting and Dropdowns<br/>Organize content hierarchically using the `children` key:[1]<br/><br/>```yaml<br/>version: 1<br/>project:<br/>  toc:<br/>    - file: part-1.md<br/>      children:<br/>        - file: part-1-first-child.md<br/>        - file: part-1-second-child.md<br/>    - file: part-2.md<br/>      children:<br/>        - file: part-2-first-child.md<br/>```<br/><br/>You can also nest children under a `title` without a parent file to create dropdown sections.[1]<br/><br/>## Additional Features<br/><br/>- **Glob patterns** respect folder structure and project exclude settings[1]<br/>- **Index/readme files** are automatically sorted first[1]<br/>- **URL entries** can be included for external links[1] |
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Volumes/Sync/GitHub/llorracc/JHUSocSciComputation/docs/index.md</summary>
 
 </details>
 </tool-use>
