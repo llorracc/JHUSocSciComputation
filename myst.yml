@@ -95,5 +95,6 @@ project:
       children:
         - file: docs/reference/platforms.md
         - file: docs/reference/rockfish-slurm-primer.md
+        - file: docs/reference/github-pages-setup.md
 site:
   template: article-theme
