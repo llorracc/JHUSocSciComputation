@@ -1,0 +1,19 @@
+/* Site typography tweaks (article-theme)
+   Goal: slightly smaller, denser reading experience.
+*/
+
+html {
+  /* Default is typically 16px; reduce overall scale a bit */
+  font-size: 15px;
+}
+
+/* Nudge headings down slightly to match the smaller base text */
+h1 {
+  font-size: 1.9rem;
+}
+h2 {
+  font-size: 1.5rem;
+}
+h3 {
+  font-size: 1.25rem;
+}

@@ -107,3 +107,5 @@ project:
         - file: docs/reference/organization-options.md
 site:
   template: article-theme
+  options:
+    style: ./site.css
