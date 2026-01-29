@@ -1,21 +1,7 @@
----
-abstract: |
-  This guide introduces the Rockfish high-performance computing cluster at Johns Hopkins University,
-  managed by Advanced Research Computing at Hopkins (ARCH). We cover the cluster's hardware resources,
-  condominium model, allocation system, and storage infrastructure, then walk through connecting to
-  the cluster, managing software modules, and submitting jobs with the Slurm workload manager. The
-  guide includes practical script examples for batch jobs, job arrays, MPI, and mixed MPI/OpenMP
-  programs, along with instructions for using Singularity containers, Python virtual environments,
-  and R on the cluster. It is intended for researchers in economics and the social sciences who are
-  new to high-performance computing, as well as experienced users seeking a reference for
-  Rockfish-specific workflows.
----
+# Appendix: Rockfish / Slurm primer
 
-Computation in economics and the social sciences enables researchers to tackle questions and analyze datasets that were previously intractable. The availability of large-scale datasets, the development of powerful computational tools, and the increasing adoption of computational methods across these disciplines have driven growing demand for high-performance computing resources.
-
-To meet this rising demand for computational power, institutions like [Johns Hopkins University](https://www.jhu.edu) have invested heavily in high-performance computing (HPC) resources, such as the Rockfish cluster managed by the [Advanced Research Computing at Hopkins (ARCH)](https://www.arch.jhu.edu/). HPC facilities like Rockfish provide researchers with access to a vast pool of computational resources, including high-performance compute nodes, GPU nodes for accelerated computing, and large-scale storage systems. These resources support computationally intensive research in economics and other social sciences, including large-scale simulations, data analysis, and numerical modeling.
-
-ARCH provides software infrastructure including compilers (GNU, Intel, PGI), MPI libraries (OpenMPI, IntelMPI, Mvapich2), and containerization tools (Singularity), along with scientific support services, training, and workshops {cite:p}`arch_sysconfig`. This report provides an overview of the resources available to researchers on the Rockfish cluster. It is intended as a guide for researchers who are new to the cluster and as a reference for those already familiar with it.
+- [Back to master index](../index.md)
+- This appendix preserves the original Rockfish-focused how-to material (lightly edited only for relocation).
 
 # Rockfish and High-Performance Computing (HPC)
 
@@ -90,9 +76,9 @@ All allocations on Rockfish are subject to limits based on the type of resource 
 - **Resource Requirements:** Justification for the specific types of resources requested, whether it's CPU cores, large memory nodes, or GPU nodes. The proposal should explain why these resources are necessary for the project and how they will be utilized.
 - **Alignment with Research Goals:** The proposal should clearly articulate how the requested allocation aligns with the overall research goals and objectives. Highlighting the potential impact and significance of the research outcomes can strengthen the justification.
 
-:::{important}
+::::{important}
 A video tutorial on using the ColdFront portal is available at: <https://youtu.be/L6zvLBK5Mss>. The tutorial covers creating an account on ColdFront, requesting an allocation, adding user accounts, and designating a proxy.
-:::
+::::
 
 ## Connecting to Rockfish
 
@@ -104,14 +90,14 @@ Regardless of the operating system or terminal application used, the following c
 - **Port:** 22 (the standard SSH port)
 - **Login Credentials:** Rockfish UserID (typically the user's JHED ID) and corresponding password.
 
-:::{important} Several SSH command variations can be used to connect to Rockfish:
+::::{important} Several SSH command variations can be used to connect to Rockfish:
 
 - `ssh YourUserId@login.rockfish.jhu.edu`
 - `ssh login.rockfish.jhu.edu -l YourUserId`
 - `ssh -XY YourUserId@login.rockfish.jhu.edu`
 
 The last command includes options for X11 forwarding (`-XY`), allowing graphical applications running on Rockfish to be displayed on the user's local machine.
-:::
+::::
 
 ## Data Transfer Methods
 
@@ -680,5 +666,6 @@ When contacting support, include the following information for a quick resolutio
 - **Error messages** and screenshots or log snippets
 - **Detailed problem description**
 
-:::{bibliography}
-:::
+::::{bibliography}
+::::
+
