@@ -55,4 +55,10 @@ For sensitive data, use only approved tools and environments:
 - **JHPCE**: [jhpce@jhu.edu](mailto:jhpce@jhu.edu) (see [JHPCE](https://jhpce.jhu.edu/)).
 - **Library data services**: [dataservices.library.jhu.edu](https://dataservices.library.jhu.edu/).
 
+## Economics department links (official)
+
+For **department-local** help navigating computing / labs / web resources, start here:
+
+- [JHU Economics Department computational / AI / data support](../reference/jhu-econ-department-resources.md)
+
 For more tasks (large jobs, software requests, etc.) see the [common tasks](../index.md#common-tasks) on the main index.

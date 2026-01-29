@@ -14,6 +14,6 @@ This page is a quick side-by-side for common economics/social-science compute ne
 
 ## If you’re unsure
 
-- Start with the “Start here” checklist: [new faculty / new project setup](../start-here/new-faculty.md)
+- Start with a “Start here” checklist: [new faculty / new project setup](../start-here/new-faculty.md) or [PhD students](../start-here/phd-students.md)
 - For Rockfish specifics: [Rockfish / Slurm primer](rockfish-slurm-primer.md)
 

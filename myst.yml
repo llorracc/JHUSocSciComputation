@@ -3,7 +3,7 @@ version: 1
 project:
   id: 88a20efc-3233-4a40-9ab0-2fa01e4cd814
   title: Computation in the Social Sciences at Johns Hopkins
-  description: A guide to the Rockfish high-performance computing cluster for researchers in economics and the social sciences at Johns Hopkins University.
+  description: A guide to the Rockfish high-performance computing cluster for faculty and students in economics and the social sciences at Johns Hopkins University.
   keywords:
     - high-performance computing
     - Rockfish
@@ -82,10 +82,15 @@ project:
   toc:
     - file: README.md
     - file: docs/index.md
+    - title: Navigation
+      children:
+        - file: docs/by-role.md
+        - file: docs/by-mission.md
     - title: Start here
       children:
         - file: docs/start-here/new-faculty.md
         - file: docs/start-here/phd-students.md
+        - file: docs/start-here/staff.md
     - title: Tasks
       children:
         - file: docs/tasks/run-large-jobs.md
@@ -97,6 +102,8 @@ project:
         - file: docs/reference/platforms.md
         - file: docs/reference/rockfish-slurm-primer.md
         - file: docs/reference/github-pages-setup.md
+        - file: docs/reference/jhu-econ-department-resources.md
+        - file: docs/reference/external-resources.md
         - file: docs/reference/organization-options.md
 site:
   template: article-theme

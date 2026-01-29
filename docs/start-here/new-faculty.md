@@ -48,3 +48,9 @@ For sensitive data, see:
   - CTLD GenAI resources: `https://engineering.jhu.edu/ctld/chatgpt/ai-tools/`
 - **Library data services**: `https://dataservices.library.jhu.edu/`
 
+## Economics department links (official)
+
+For **department-local** help navigating computing / labs / web resources (as listed on `econ.jhu.edu`):
+
+- [JHU Economics Department computational / AI / data support](../reference/jhu-econ-department-resources.md)
+
