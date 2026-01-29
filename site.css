@@ -4,16 +4,16 @@
 
 html {
   /* Default is typically 16px; reduce overall scale a bit */
-  font-size: 15px;
+  font-size: 13.5px;
 }
 
 /* Nudge headings down slightly to match the smaller base text */
 h1 {
-  font-size: 1.9rem;
+  font-size: 1.7rem;
 }
 h2 {
-  font-size: 1.5rem;
+  font-size: 1.35rem;
 }
 h3 {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
 }
