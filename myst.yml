@@ -85,6 +85,7 @@ project:
     - title: Start here
       children:
         - file: docs/start-here/new-faculty.md
+        - file: docs/start-here/phd-students.md
     - title: Tasks
       children:
         - file: docs/tasks/run-large-jobs.md
@@ -96,5 +97,6 @@ project:
         - file: docs/reference/platforms.md
         - file: docs/reference/rockfish-slurm-primer.md
         - file: docs/reference/github-pages-setup.md
+        - file: docs/reference/organization-options.md
 site:
   template: article-theme

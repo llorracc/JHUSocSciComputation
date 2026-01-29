@@ -5,6 +5,7 @@ This documentation is organized by **what you’re trying to do** (journeys/task
 ## Start here
 
 - [New faculty / new project setup](start-here/new-faculty.md)
+- [PhD students](start-here/phd-students.md)
 
 ## Common tasks
 
@@ -17,6 +18,7 @@ This documentation is organized by **what you’re trying to do** (journeys/task
 
 - [Platform comparison (Rockfish vs DISCOVERY vs JHPCE vs SciServer vs Cloud)](reference/platforms.md)
 - [Rockfish / Slurm primer (appendix)](reference/rockfish-slurm-primer.md)
+- [Alternative organizational structures for this documentation](reference/organization-options.md)
 
 ## Update notes
 

@@ -32,7 +32,12 @@ After that, the next push to `main` (or a re-run of the “MyST GitHub Pages Dep
 
 **https://llorracc.github.io/JHUSocSciComputation**
 
-## If it still doesn’t work
+## Monthly documentation review
 
-- In the repo, open the **Actions** tab and check the latest “MyST GitHub Pages Deploy” run. If the build or deploy step fails, the logs there will show the error.
-- Ensure the run completed successfully (green check). Only successful runs update the live site.
+A workflow runs **roughly once a month** (1st of each month at 9:00 UTC) to review the docs:
+
+- **Change detection:** Lists files and commits changed in `docs/`, `README.md`, and `myst.yml` over the last 30 days.
+- **GitHub Issue:** Creates or updates an issue titled “Monthly doc review – YYYY-MM” with that summary.
+- **Optional AI summary:** If you add an **`OPENAI_API_KEY`** repo secret (Settings → Secrets and variables → Actions), the workflow will call OpenAI to summarize the diff and suggest improvements; the result is included in the same issue.
+
+You can also run it manually: **Actions** → **Monthly doc review** → **Run workflow**.
