@@ -6,7 +6,7 @@ JHU does not publish a single static public list of every license/subscription. 
 
 ### 1) Campus-wide catalog (“mySoftware”)
 
-WSE IT describes this as “a larger list of general Johns Hopkins software packages.”
+WSE IT describes this as “a larger list of general JHU software packages.”
 
 - **Start**: `https://my.jh.edu/`
 - **Navigate**: Technology → mySoftware (Software Catalog)
@@ -24,7 +24,7 @@ WSE IT documents a WSE software library at `https://software.wse.jhu.edu` and no
 
 ## When you can’t find what you need
 
-At least in Johns Hopkins Medicine contexts, IT@JH documents a “Software Intake Process (SIP)” for software purchased outside the JH mySoftware/ServiceNow catalog:
+At least in JHU Medicine contexts, IT@JH documents a “Software Intake Process (SIP)” for software purchased outside the JH mySoftware/ServiceNow catalog:
 
 - `https://it.johnshopkins.edu/governance-committees-it-policies/the-software-intake-process-sip-requesting-a-new-software-based-solution/`
 

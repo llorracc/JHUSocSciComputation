@@ -2,8 +2,8 @@
 version: 1
 project:
   id: 88a20efc-3233-4a40-9ab0-2fa01e4cd814
-  title: Computation in the Social Sciences at Johns Hopkins
-  description: A guide to the Rockfish high-performance computing cluster for faculty and students in economics and the social sciences at Johns Hopkins University.
+  title: Computation in the Social Sciences at JHU
+  description: A guide to the Rockfish high-performance computing cluster for faculty and students in economics and the social sciences at JHU.
   keywords:
     - high-performance computing
     - Rockfish
@@ -11,11 +11,10 @@ project:
     - Slurm
     - economics
     - social sciences
-    - Johns Hopkins University
-  date: 2025-01-28
+    - JHU
   affiliations:
     - id: jhu-ksas
-      institution: Johns Hopkins University
+      institution: JHU
       department: Krieger School of Arts and Sciences
       ror: https://ror.org/00za53h95
       isni: 0000 0001 2171 9311
@@ -23,7 +22,7 @@ project:
       state: DC
       country: US
     - id: jhu-econ
-      institution: Johns Hopkins University
+      institution: JHU
       department: Department of Economics
       ror: https://ror.org/00za53h95
       isni: 0000 0001 2171 9311
@@ -70,13 +69,13 @@ project:
     NVMe: Non-Volatile Memory Express
     SSH: Secure Shell
     PI: Principal Investigator
-    JHED: Johns Hopkins Enterprise Directory
+    JHED: JHU Enterprise Directory
   bibliography:
     - references.bib
   open_access: true
   license: CC-BY-4.0
   subject: Economics
-  venue: Johns Hopkins University
+  venue: JHU
   numbering:
     headings: true
   toc:

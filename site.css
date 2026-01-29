@@ -4,16 +4,32 @@
 
 html {
   /* Default is typically 16px; reduce overall scale a bit */
-  font-size: 13.5px;
+  font-size: 12.5px;
+  line-height: 1.45;
 }
 
 /* Nudge headings down slightly to match the smaller base text */
 h1 {
-  font-size: 1.7rem;
+  font-size: 1.55rem;
 }
 h2 {
-  font-size: 1.35rem;
+  font-size: 1.25rem;
 }
 h3 {
-  font-size: 1.15rem;
+  font-size: 1.08rem;
+}
+
+/* Sidebar / supporting-documents navigation (right margin) */
+.myst-supporting-documents {
+  font-size: 0.68rem !important;
+  line-height: 1.2 !important;
+}
+
+.myst-supporting-documents + ul {
+  font-size: 0.74rem !important;
+  line-height: 1.25 !important;
+}
+
+.myst-supporting-documents + ul a {
+  font-size: inherit !important;
 }

@@ -6,6 +6,7 @@ This documentation is for **faculty and students** in economics and the social s
 
 - **By audience/role (faculty, students, staff):** [Navigate by audience/role](by-role.md)
 - **By mission/goal (what you want to achieve):** [Navigate by mission](by-mission.md)
+- **External sources (beyond JHU):** [External resources (computational economics)](reference/external-resources.md)
 
 ## Start here
 
@@ -28,8 +29,7 @@ This documentation is for **faculty and students** in economics and the social s
 - [External resources (computational economics)](reference/external-resources.md)
 - [Alternative organizational structures for this documentation](reference/organization-options.md)
 
-## Update notes
+## Notes
 
-- This set was reorganized from a single long `report.md` into linked pages (2026-01).
 - Many JHU resources require JHED login, VPN, and/or MFA; see the “Start here” page.
 

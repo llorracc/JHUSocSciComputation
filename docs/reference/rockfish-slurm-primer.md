@@ -1,17 +1,16 @@
 # Appendix: Rockfish / Slurm primer
 
 - [Back to master index](../index.md)
-- This appendix preserves the original Rockfish-focused how-to material (lightly edited only for relocation).
+- This appendix is a practical Rockfish-focused how-to. For anything time-sensitive (policies, current modules, partitions, hardware), defer to the official ARCH documentation.
 
 # Rockfish and High-Performance Computing (HPC)
 
-Rockfish is the flagship high-performance computing resource at Johns Hopkins University. It is a shared facility where researchers from various departments, including Economics and other Social Sciences, can contribute computational resources in a homogeneous environment. This setup not only provides stability and priority usage for those contributing resources, but also benefits all researchers by expanding the available computational power for everyone through efficient resource load-balancing.
+Rockfish is the flagship high-performance computing resource at JHU. It is a shared facility where researchers from various departments, including Economics and other Social Sciences, can contribute computational resources in a homogeneous environment. This setup not only provides stability and priority usage for those contributing resources, but also benefits all researchers by expanding the available computational power for everyone through efficient resource load-balancing.
 
-## The Evolution of ARCH and its Flagship Cluster, Rockfish
+## Authoritative references (use these when details change)
 
-The Advanced Research Computing at Hopkins (ARCH) facility was originally known as the Maryland Advanced Research Computing Center (MARCC), a shared facility jointly managed by Johns Hopkins University and the University of Maryland College Park {cite:p}`jhu_hub_marcc_arch`. MARCC operated under the direction of Alex Szalay, the founding director of IDIES, and was located on the Bayview Campus of Johns Hopkins University {cite:p}`idies_marcc`. The financial foundation for MARCC was laid by a State of Maryland grant provided to Johns Hopkins through the Institute for Data Intensive Engineering and Science (IDIES). MARCC evolved into ARCH in 2021, signaling a shift towards a more Hopkins-centric approach {cite:p}`arch_about`.
-
-ARCH's flagship HPC cluster, **Rockfish**, succeeded the previous Bluecrab cluster, which retired in June 2022 after 7.5 years of service {cite:p}`arch_bluecrab_retire`. Rockfish went into production in March 2021 with funding from a National Science Foundation (NSF) Major Research Instrumentation grant {cite:p}`nsf_oac_1920103`. As of June 2024, Rockfish ranked #496 on the Top500 list at 1.89 PFlops {cite:p}`arch_top500_2024`, having previously ranked #414 in June 2022 {cite:p}`arch_top500_2022`.
+- **ARCH docs (Rockfish, partitions, policies, current recommendations):** `https://docs.arch.jhu.edu/en/latest/`
+- **Allocations / ColdFront:** `https://coldfront.rockfish.jhu.edu/` (policy: `https://www.arch.jhu.edu/policies/allocations/`)
 
 ## The Condominium Model
 
@@ -210,7 +209,11 @@ Slurm batch scripts are essential for running non-interactive jobs on Rockfish, 
 - **Environment Setup:** This part of the script handles the setup of the job's software environment. It typically includes loading the required modules for compilers, libraries, and applications. Modules, managed by Lmod, provide a standardized way to access and manage different software versions on Rockfish, ensuring consistency and reproducibility. For example, to load the Intel compiler module:
 
 ```bash
-ml intel/2022.2 
+# Find the module name(s) available on Rockfish
+module spider intel
+
+# Load the appropriate module (name/version may differ)
+module load intel
 ```
 
 - **Job Steps:** This section encompasses the actual commands to be executed during the job. It can include compiling code, running executables, processing data, and performing any other task defined by the researcher.
@@ -510,7 +513,7 @@ Remember that these are example scripts, and you'll need to tailor them to your 
 
 ## Singularity Containers
 
-**Singularity** (now known as **Apptainer** following its 2021 move to the Linux Foundation) is available on the compute nodes of the Rockfish cluster without loading a module. (The version available may change over time; consult the [ARCH documentation](https://docs.arch.jhu.edu/) for the current version.) To use Singularity, request an interactive session on a compute node using the `interact` command, specifying the desired partition, number of cores, and time limit:
+**Singularity / Apptainer** is available on Rockfish compute nodes without loading a module. (Exact versions and preferred commands can change; consult the [ARCH documentation](https://docs.arch.jhu.edu/) for current guidance.) To use it, request an interactive session on a compute node using the `interact` command, specifying the desired partition, number of cores, and time limit:
 
 ```bash
 interact -p parallel -n 1 -c 1 -t 120
@@ -523,7 +526,7 @@ The key Singularity commands are:
 - `singularity pull`: Pulls a container image from a registry such as Docker Hub. Singularity is compatible with Docker images. For example:
 
 ```bash
-singularity pull python-3.9.6.sif docker://python:3.9.6-slim-buster
+singularity pull python.sif docker://python:3.11-slim
 ```
 
 - `singularity run`: Runs a Singularity image. For example, `singularity run python-3.9.6.sif`.
