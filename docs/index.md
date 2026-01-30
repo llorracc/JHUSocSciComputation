@@ -7,6 +7,7 @@ This documentation is for **faculty and students** in economics and the social s
 - **By audience/role (faculty, students, staff):** [Navigate by audience/role](by-role.md)
 - **By mission/goal (what you want to achieve):** [Navigate by mission](by-mission.md)
 - **External sources (beyond JHU):** [External resources (computational economics)](reference/external-resources.md)
+- **GitHub repository (source + propose edits):** `https://github.com/llorracc/JHUSocSciComputation`
 
 ## Start here
 
@@ -24,6 +25,7 @@ This documentation is for **faculty and students** in economics and the social s
 ## Reference
 
 - [Platform comparison (Rockfish vs DISCOVERY vs JHPCE vs SciServer vs Cloud)](reference/platforms.md)
+- [JHPCE setup + “condo node” / community model](reference/jhpce-setup.md)
 - [Rockfish / Slurm primer (appendix)](reference/rockfish-slurm-primer.md)
 - [JHU Economics Department computational / AI / data support (econ.jhu.edu)](reference/jhu-econ-department-resources.md)
 - [External resources (computational economics)](reference/external-resources.md)

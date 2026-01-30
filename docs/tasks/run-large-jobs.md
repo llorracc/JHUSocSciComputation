@@ -32,7 +32,9 @@ Typical choices:
 ## JHPCE quick start (when JHPCE is the right answer)
 
 - **Overview + access**: `https://jhpce.jhu.edu/`
-- JHPCE provides a new user request form and documents its Slurm environment and community model.
+- **How the JHPCE community/“condo” model works** (what it means to “provide a node”): [JHPCE setup + condo model](../reference/jhpce-setup.md)
+- JHPCE provides a new user request form and documents its Slurm environment and community model (stakeholder-owned resources with excess capacity available “as available”).
+- If your lab **contributes/buys hardware** that is integrated into JHPCE, you typically get **priority access** to those nodes while still benefiting from shared idle capacity elsewhere in the cluster (exact policies vary—see the reference link above and confirm with JHPCE).
 
 ## SciServer quick start (when SciServer is the right answer)
 
